@@ -1,0 +1,14 @@
+{
+  "name": "bluvia",
+  "version": "1.0.0",
+  "description": "Bluvia — Pure Supply. Smart Distribution. Water bottle e-commerce platform.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^5.1.4"
+  }
+}

@@ -1,0 +1,343 @@
+﻿<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bluvia Premium Admin Control Panel</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Outfit:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#00e5ff",
+                        "accent-gold": "#ffd700",
+                        "background-light": "#f5f8f8",
+                        "background-dark": "#060d1a",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "heading": ["Outfit", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .cyan-glow {
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="flex flex-col min-h-screen">
+<!-- Navbar -->
+<header class="sticky top-0 z-50 glass-panel border-b border-white/10 px-6 py-4">
+<div class="max-w-[1440px] mx-auto flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="bg-primary/20 p-2 rounded-lg">
+<span class="material-symbols-outlined text-primary text-3xl">water_drop</span>
+</div>
+<h1 class="font-heading text-2xl font-bold tracking-tight text-white">Bluvia<span class="text-primary">.</span></h1>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative hidden md:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="bg-white/5 border border-white/10 rounded-lg pl-10 pr-4 py-2 text-sm focus:ring-1 focus:ring-primary focus:border-primary w-64 outline-none" placeholder="Search orders..." type="text"/>
+</div>
+<div class="flex items-center gap-4 border-l border-white/10 pl-6">
+<div class="text-right hidden sm:block">
+<p class="text-xs font-semibold text-accent-gold uppercase tracking-wider">Premium Supplier</p>
+<p class="text-sm font-medium">Alexander Wright</p>
+</div>
+<div class="relative">
+<div class="w-10 h-10 rounded-full bg-slate-800 border border-white/20 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Admin user profile picture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIusENkJGNECwZBm3as0MJ70IYW6Xx6L-a_szTG7BZcokqLQV2-TJL3Fyig1jN0YyqgtqszKYMQbACfR8dxTOYg8_HyeE1b7PuGnOC8wlQzqmyHq2hZ_jHfIW0rkKHmk8CkvBk4aFcEx8R2VSPfmVlk-pIkZNHkW5GoL1Pu83HaOiaXj3oC4MExHKfQFnqTeZfTlA5O1_C6UQUcL0VfKpX2dDaXQ1DOFNngNYfAY0NTmNRgQrnvcYocekSVcUnxEb15r6niVPbCSU"/>
+</div>
+<span class="absolute -top-1 -right-1 bg-accent-gold text-[10px] font-bold text-background-dark px-1.5 py-0.5 rounded-full border-2 border-background-dark">ADMIN</span>
+</div>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-1 max-w-[1440px] mx-auto w-full p-6 space-y-8">
+<!-- Tab Navigation -->
+<nav class="flex border-b border-white/5 gap-8">
+<a class="pb-4 border-b-2 border-primary text-primary font-semibold flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-[20px]">shopping_cart</span>
+                    Orders
+                </a>
+<a class="pb-4 border-b-2 border-transparent text-slate-400 hover:text-white transition-colors flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-[20px]">inventory_2</span>
+                    Products
+                </a>
+<a class="pb-4 border-b-2 border-transparent text-slate-400 hover:text-white transition-colors flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-[20px]">group</span>
+                    Users
+                </a>
+<a class="pb-4 border-b-2 border-transparent text-slate-400 hover:text-white transition-colors flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-[20px]">bar_chart</span>
+                    Analytics
+                </a>
+</nav>
+<!-- Stats Row -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="glass-panel p-6 rounded-xl cyan-glow">
+<div class="flex items-center justify-between mb-4">
+<span class="material-symbols-outlined text-primary bg-primary/10 p-2 rounded-lg">list_alt</span>
+<span class="text-primary text-xs font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">trending_up</span> +12%
+                        </span>
+</div>
+<p class="text-slate-400 text-sm font-medium">Total Orders</p>
+<h3 class="font-heading text-3xl font-bold mt-1 text-white">1,284</h3>
+</div>
+<div class="glass-panel p-6 rounded-xl">
+<div class="flex items-center justify-between mb-4">
+<span class="material-symbols-outlined text-primary bg-primary/10 p-2 rounded-lg">payments</span>
+<span class="text-primary text-xs font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">trending_up</span> +8.4%
+                        </span>
+</div>
+<p class="text-slate-400 text-sm font-medium">Revenue</p>
+<h3 class="font-heading text-3xl font-bold mt-1 text-white">â¹45,230</h3>
+</div>
+<div class="glass-panel p-6 rounded-xl">
+<div class="flex items-center justify-between mb-4">
+<span class="material-symbols-outlined text-orange-400 bg-orange-400/10 p-2 rounded-lg">pending_actions</span>
+<span class="text-orange-400 text-xs font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">trending_down</span> -3%
+                        </span>
+</div>
+<p class="text-slate-400 text-sm font-medium">Pending Orders</p>
+<h3 class="font-heading text-3xl font-bold mt-1 text-white">42</h3>
+</div>
+<div class="glass-panel p-6 rounded-xl">
+<div class="flex items-center justify-between mb-4">
+<span class="material-symbols-outlined text-green-400 bg-green-400/10 p-2 rounded-lg">check_circle</span>
+<span class="text-green-400 text-xs font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">trending_up</span> +15%
+                        </span>
+</div>
+<p class="text-slate-400 text-sm font-medium">Delivered</p>
+<h3 class="font-heading text-3xl font-bold mt-1 text-white">1,242</h3>
+</div>
+</div>
+<!-- Order Management Table -->
+<div class="glass-panel rounded-xl overflow-hidden">
+<div class="p-6 border-b border-white/5 flex items-center justify-between bg-white/5">
+<h2 class="font-heading text-xl font-bold text-white">Order Management</h2>
+<button class="bg-primary hover:bg-primary/90 text-background-dark px-4 py-2 rounded-lg font-bold text-sm transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                        New Order
+                    </button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-white/5 text-slate-400 text-xs font-bold uppercase tracking-wider">
+<th class="px-6 py-4">Order ID</th>
+<th class="px-6 py-4">Customer</th>
+<th class="px-6 py-4">Product</th>
+<th class="px-6 py-4 text-center">Qty</th>
+<th class="px-6 py-4">Status</th>
+<th class="px-6 py-4 text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-white/5">
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-6 py-4 font-mono text-sm text-primary">#ORD-2849</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center text-[10px] font-bold">JD</div>
+<div>
+<p class="text-sm font-medium text-white">John Doe</p>
+<p class="text-xs text-slate-500">john@example.com</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-300">Bluvia Pure 1L (Glass)</td>
+<td class="px-6 py-4 text-center text-sm font-medium">12</td>
+<td class="px-6 py-4">
+<select class="bg-white/5 border-none text-xs font-semibold rounded-lg px-2 py-1 focus:ring-1 focus:ring-primary text-orange-400 cursor-pointer">
+<option selected="">Pending</option>
+<option>Processing</option>
+<option>Delivered</option>
+<option>Cancelled</option>
+</select>
+</td>
+<td class="px-6 py-4 text-right space-x-2">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-6 py-4 font-mono text-sm text-primary">#ORD-2850</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center text-[10px] font-bold">SA</div>
+<div>
+<p class="text-sm font-medium text-white">Sarah Alvi</p>
+<p class="text-xs text-slate-500">sarah.a@gmail.com</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-300">Bluvia Sport 750ml</td>
+<td class="px-6 py-4 text-center text-sm font-medium">48</td>
+<td class="px-6 py-4">
+<select class="bg-white/5 border-none text-xs font-semibold rounded-lg px-2 py-1 focus:ring-1 focus:ring-primary text-blue-400 cursor-pointer">
+<option>Pending</option>
+<option selected="">Processing</option>
+<option>Delivered</option>
+<option>Cancelled</option>
+</select>
+</td>
+<td class="px-6 py-4 text-right space-x-2">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-6 py-4 font-mono text-sm text-primary">#ORD-2851</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center text-[10px] font-bold">MK</div>
+<div>
+<p class="text-sm font-medium text-white">Michael Khan</p>
+<p class="text-xs text-slate-500">m.khan@outlook.com</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-300">Bluvia Bulk 5L Tank</td>
+<td class="px-6 py-4 text-center text-sm font-medium">5</td>
+<td class="px-6 py-4">
+<select class="bg-white/5 border-none text-xs font-semibold rounded-lg px-2 py-1 focus:ring-1 focus:ring-primary text-green-400 cursor-pointer">
+<option>Pending</option>
+<option>Processing</option>
+<option selected="">Delivered</option>
+<option>Cancelled</option>
+</select>
+</td>
+<td class="px-6 py-4 text-right space-x-2">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 bg-white/5 flex items-center justify-between text-xs text-slate-500">
+<span>Showing 1-10 of 1,284 results</span>
+<div class="flex gap-2">
+<button class="px-3 py-1 rounded border border-white/10 hover:bg-white/10 transition-colors disabled:opacity-50" disabled="">Previous</button>
+<button class="px-3 py-1 rounded border border-white/10 bg-primary/20 text-primary border-primary/20">1</button>
+<button class="px-3 py-1 rounded border border-white/10 hover:bg-white/10 transition-colors">2</button>
+<button class="px-3 py-1 rounded border border-white/10 hover:bg-white/10 transition-colors">Next</button>
+</div>
+</div>
+</div>
+<!-- Product Stock Preview -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div class="lg:col-span-2 glass-panel rounded-xl p-6">
+<div class="flex items-center justify-between mb-6">
+<h2 class="font-heading text-lg font-bold text-white">Product Stock Tiers</h2>
+<a class="text-primary text-sm font-semibold hover:underline" href="#">View All Inventory</a>
+</div>
+<div class="space-y-6">
+<div>
+<div class="flex justify-between text-sm mb-2">
+<span class="text-slate-300 font-medium">Bluvia Pure Glass (Premium)</span>
+<span class="text-primary font-bold">1,402 / 2,000 Units</span>
+</div>
+<div class="w-full bg-white/5 rounded-full h-2">
+<div class="bg-primary h-2 rounded-full cyan-glow" style="width: 70%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-sm mb-2">
+<span class="text-slate-300 font-medium">Bluvia Sport Lightweight</span>
+<span class="text-primary font-bold">850 / 5,000 Units</span>
+</div>
+<div class="w-full bg-white/5 rounded-full h-2">
+<div class="bg-orange-400 h-2 rounded-full" style="width: 17%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-sm mb-2">
+<span class="text-slate-300 font-medium">Bluvia Lite BPA-Free</span>
+<span class="text-primary font-bold">3,200 / 4,000 Units</span>
+</div>
+<div class="w-full bg-white/5 rounded-full h-2">
+<div class="bg-primary h-2 rounded-full cyan-glow" style="width: 80%"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="glass-panel rounded-xl p-6 relative overflow-hidden">
+<div class="relative z-10">
+<h2 class="font-heading text-lg font-bold text-white mb-4">Stock Alerts</h2>
+<div class="space-y-4">
+<div class="flex items-start gap-3 p-3 rounded-lg bg-orange-400/5 border border-orange-400/20">
+<span class="material-symbols-outlined text-orange-400">warning</span>
+<div>
+<p class="text-sm font-semibold text-orange-400">Low Stock: Bluvia Sport</p>
+<p class="text-xs text-slate-400 mt-1">Less than 20% inventory remaining in Warehouse B.</p>
+</div>
+</div>
+<div class="flex items-start gap-3 p-3 rounded-lg bg-primary/5 border border-primary/20">
+<span class="material-symbols-outlined text-primary">local_shipping</span>
+<div>
+<p class="text-sm font-semibold text-primary">Restock Incoming</p>
+<p class="text-xs text-slate-400 mt-1">5,000 units of Bluvia Pure expected by Tomorrow.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="absolute -bottom-10 -right-10 opacity-5">
+<span class="material-symbols-outlined text-[120px] text-white">inventory</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="border-t border-white/5 py-8 px-6 mt-12 bg-white/[0.02]">
+<div class="max-w-[1440px] mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl">water_drop</span>
+<span class="text-sm font-bold text-white">Bluvia Control Panel</span>
+</div>
+<div class="text-xs text-slate-500">
+                    Â© 2024 Bluvia Premium Water Systems. All rights reserved.
+                </div>
+<div class="flex items-center gap-6">
+<span class="text-[10px] font-bold text-slate-600 bg-white/5 px-2 py-1 rounded">V2.4.1-STABLE</span>
+<a class="text-xs text-slate-400 hover:text-white transition-colors" href="#">Privacy Policy</a>
+<a class="text-xs text-slate-400 hover:text-white transition-colors" href="#">Support Center</a>
+</div>
+</div>
+</footer>
+</div>
+</body></html>

@@ -1,0 +1,278 @@
+﻿<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bluvia Premium Checkout Experience</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;family=Outfit:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#06e0f9",
+                        "background-light": "#f5f8f8",
+                        "background-dark": "#060d1a",
+                    },
+                    fontFamily: {
+                        "display": ["Outfit", "Inter", "sans-serif"],
+                        "sans": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glass-dark {
+            background: rgba(6, 224, 249, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(6, 224, 249, 0.1);
+        }
+        .cyan-glow:focus {
+            box-shadow: 0 0 15px rgba(6, 224, 249, 0.3);
+            border-color: #06e0f9;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-sans text-slate-900 dark:text-slate-100 min-h-screen">
+<!-- Navbar -->
+<header class="sticky top-0 z-50 px-6 py-4">
+<nav class="max-w-7xl mx-auto glass rounded-2xl px-8 py-4 flex items-center justify-between">
+<div class="flex items-center gap-2 group cursor-pointer">
+<div class="size-10 bg-primary/20 rounded-xl flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-3xl">water_drop</span>
+</div>
+<h1 class="text-2xl font-display font-bold tracking-tight text-slate-100">Bluvia</h1>
+</div>
+<div class="hidden md:flex items-center gap-10">
+<a class="text-sm font-medium text-slate-400 hover:text-primary transition-colors" href="#">Shop</a>
+<a class="text-sm font-medium text-slate-400 hover:text-primary transition-colors" href="#">About</a>
+<a class="text-sm font-medium text-slate-400 hover:text-primary transition-colors" href="#">Sustainability</a>
+<a class="text-sm font-medium text-slate-400 hover:text-primary transition-colors" href="#">Support</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-400 hover:text-primary">
+<span class="material-symbols-outlined">search</span>
+</button>
+<div class="h-6 w-px bg-slate-800"></div>
+<button class="flex items-center gap-2 bg-primary text-background-dark px-5 py-2.5 rounded-xl font-bold text-sm hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-lg">person</span>
+                    Account
+                </button>
+</div>
+</nav>
+</header>
+<main class="max-w-7xl mx-auto px-6 py-12">
+<div class="mb-10">
+<h2 class="text-4xl font-display font-extrabold text-slate-100 mb-2">Checkout</h2>
+<p class="text-slate-400 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm">lock</span>
+                Secure checkout for your premium hydration order
+            </p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Left Column: Cart Items -->
+<div class="lg:col-span-7 space-y-6">
+<h3 class="text-xl font-display font-semibold text-slate-200 px-2">Your Selection (2 items)</h3>
+<!-- Cart Item 1 -->
+<div class="glass p-6 rounded-2xl flex items-center gap-6 group hover:border-primary/30 transition-colors">
+<div class="size-24 rounded-xl bg-slate-800 overflow-hidden shrink-0">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="Premium minimalist glass water bottle with metallic cap" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFYgC1MtQ2hZhT0lzgrVA_Ifu483L3Q70prRp1-NCmb0ZRE3dk688Lm8jfF1Bj5c-ZwiV-sKOlodizvu-pakXHVahVbM086eygNiZwm8U81xDc27cddVr9XF6K7poVMXCyxJWw8ZHOrIDVlei5ikOrg5NXFU5eBjgfKeFtNkJQLYhZ7mK_Z6hnbAFhAa8fOGl5OAmvAlnr2scm2kjGensWiBhXfvPPf0dyd6vf4g9i0i2VcYUUY1Qw90fTB5oLhM2Ka5tDgJ1SkqM"/>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-1">
+<h4 class="text-lg font-bold text-slate-100">Bluvia Premium Water Bottle</h4>
+<button class="text-slate-500 hover:text-red-400">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+<p class="text-sm text-slate-400 mb-4">750ml â¢ Frosted Obsidian Edition</p>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3 bg-slate-900/50 p-1 rounded-lg border border-slate-800">
+<button class="size-8 flex items-center justify-center rounded-md hover:bg-slate-800 text-slate-300">-</button>
+<span class="w-4 text-center font-medium text-slate-100">1</span>
+<button class="size-8 flex items-center justify-center rounded-md hover:bg-slate-800 text-slate-300">+</button>
+</div>
+<p class="text-xl font-bold text-primary">â¹10</p>
+</div>
+</div>
+</div>
+<!-- Cart Item 2 -->
+<div class="glass p-6 rounded-2xl flex items-center gap-6 group hover:border-primary/30 transition-colors">
+<div class="size-24 rounded-xl bg-slate-800 overflow-hidden shrink-0">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="Cleaning kit for water bottles including brushes" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6b-KKhAFmEYHWF1ZNP7ZSueTbVyBed5aOQI41xMAEfLU9oRubGz2VCvfGDg22dvk0Zn2Ajn4pVkblJn0z7k_a3PmhaLwyTvIeXZ5gzCctleZnrIKG_i7cJ9ibOIpl0xnBFbPiOANvTrqZrPSedgIt0shwxBLf1_WMGH4yNhhEkJ8rGuoJAdxxE68XcNH4sdluyflTphRcX1O3fjAS-ckRD14yfnNX3i3o4HaOuN11JnC_0DnqTGgcuM3gEgsV2oIEe7SZpOuVJyo"/>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-1">
+<h4 class="text-lg font-bold text-slate-100">Bluvia Accessory Kit</h4>
+<button class="text-slate-500 hover:text-red-400">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+<p class="text-sm text-slate-400 mb-4">Cleaning Brush &amp; Spare Seal Set</p>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3 bg-slate-900/50 p-1 rounded-lg border border-slate-800">
+<button class="size-8 flex items-center justify-center rounded-md hover:bg-slate-800 text-slate-300">-</button>
+<span class="w-4 text-center font-medium text-slate-100">1</span>
+<button class="size-8 flex items-center justify-center rounded-md hover:bg-slate-800 text-slate-300">+</button>
+</div>
+<p class="text-xl font-bold text-primary">â¹5</p>
+</div>
+</div>
+</div>
+<!-- Shipping Method (Bonus Visual) -->
+<div class="pt-6">
+<h3 class="text-xl font-display font-semibold text-slate-200 px-2 mb-4">Shipping Method</h3>
+<div class="glass p-4 rounded-2xl border-primary/50 bg-primary/5 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="size-10 rounded-full bg-primary/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">local_shipping</span>
+</div>
+<div>
+<p class="font-bold text-slate-100">Premium Express Delivery</p>
+<p class="text-xs text-slate-400">Estimated delivery: Tomorrow, 10 AM - 2 PM</p>
+</div>
+</div>
+<span class="text-primary font-bold">Free</span>
+</div>
+</div>
+</div>
+<!-- Right Column: Summary & Form (Sticky) -->
+<div class="lg:col-span-5 space-y-6">
+<div class="sticky top-28 space-y-6">
+<!-- Order Summary -->
+<div class="glass-dark p-8 rounded-2xl">
+<h3 class="text-xl font-display font-bold text-slate-100 mb-6">Order Summary</h3>
+<div class="space-y-4 mb-6">
+<div class="flex justify-between text-slate-400">
+<span>Subtotal</span>
+<span class="text-slate-200 font-medium">â¹15.00</span>
+</div>
+<div class="flex justify-between text-slate-400">
+<span>Delivery Fee</span>
+<span class="text-primary font-medium">FREE</span>
+</div>
+<div class="flex justify-between text-slate-400">
+<span>GST (18%)</span>
+<span class="text-slate-200 font-medium">â¹2.70</span>
+</div>
+<div class="pt-4 border-t border-slate-800 flex justify-between items-end">
+<span class="text-lg font-bold text-slate-100">Total Amount</span>
+<span class="text-3xl font-display font-black text-primary tracking-tight">â¹17.70</span>
+</div>
+</div>
+<!-- Delivery Info Form -->
+<div class="space-y-4">
+<h4 class="text-sm font-bold uppercase tracking-widest text-slate-500 mb-4">Delivery Information</h4>
+<div>
+<label class="block text-xs font-semibold text-slate-400 mb-1.5 ml-1">Full Name</label>
+<input class="w-full bg-slate-900/50 border-slate-700 rounded-xl px-4 py-3 text-slate-100 cyan-glow focus:ring-0 transition-all outline-none" placeholder="John Doe" type="text"/>
+</div>
+<div>
+<label class="block text-xs font-semibold text-slate-400 mb-1.5 ml-1">Shipping Address</label>
+<input class="w-full bg-slate-900/50 border-slate-700 rounded-xl px-4 py-3 text-slate-100 cyan-glow focus:ring-0 transition-all outline-none" placeholder="Apartment, Street, Area" type="text"/>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-xs font-semibold text-slate-400 mb-1.5 ml-1">City</label>
+<input class="w-full bg-slate-900/50 border-slate-700 rounded-xl px-4 py-3 text-slate-100 cyan-glow focus:ring-0 transition-all outline-none" placeholder="Mumbai" type="text"/>
+</div>
+<div>
+<label class="block text-xs font-semibold text-slate-400 mb-1.5 ml-1">Pincode</label>
+<input class="w-full bg-slate-900/50 border-slate-700 rounded-xl px-4 py-3 text-slate-100 cyan-glow focus:ring-0 transition-all outline-none" placeholder="400001" type="text"/>
+</div>
+</div>
+<div>
+<label class="block text-xs font-semibold text-slate-400 mb-1.5 ml-1">Phone Number</label>
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-sm">+91</span>
+<input class="w-full bg-slate-900/50 border-slate-700 rounded-xl pl-12 pr-4 py-3 text-slate-100 cyan-glow focus:ring-0 transition-all outline-none" placeholder="98765 43210" type="tel"/>
+</div>
+</div>
+</div>
+<!-- Pay Button -->
+<button class="w-full mt-8 bg-gradient-to-r from-primary to-[#00b4d8] text-background-dark font-display font-black text-lg py-5 rounded-2xl shadow-[0_10px_30px_-10px_rgba(6,224,249,0.5)] hover:scale-[1.02] transition-transform active:scale-95 flex flex-col items-center justify-center gap-1">
+<span>PAY NOW</span>
+<span class="text-[10px] opacity-70 font-sans font-bold flex items-center gap-1 tracking-wider uppercase">
+<span class="material-symbols-outlined text-[12px]">verified_user</span> Secured by Razorpay
+                            </span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="mt-20 border-t border-slate-900 pt-16 pb-8 bg-background-dark/50">
+<div class="max-w-7xl mx-auto px-6">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+<div class="col-span-1 md:col-span-1">
+<div class="flex items-center gap-2 mb-6">
+<div class="size-8 bg-primary/20 rounded-lg flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-xl">water_drop</span>
+</div>
+<h2 class="text-xl font-display font-bold tracking-tight text-slate-100">Bluvia</h2>
+</div>
+<p class="text-slate-400 text-sm leading-relaxed">Redefining hydration through premium materials and minimalist design. Sustainable, sleek, and superior.</p>
+</div>
+<div>
+<h5 class="text-slate-100 font-bold mb-6">Product</h5>
+<ul class="space-y-4 text-sm text-slate-400">
+<li><a class="hover:text-primary transition-colors" href="#">The Bottle</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Accessories</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Limited Editions</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Wholesale</a></li>
+</ul>
+</div>
+<div>
+<h5 class="text-slate-100 font-bold mb-6">Support</h5>
+<ul class="space-y-4 text-sm text-slate-400">
+<li><a class="hover:text-primary transition-colors" href="#">Shipping Policy</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Return &amp; Refund</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Track Order</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Contact Us</a></li>
+</ul>
+</div>
+<div>
+<h5 class="text-slate-100 font-bold mb-6">Connect</h5>
+<div class="flex gap-4">
+<a class="size-10 rounded-xl glass flex items-center justify-center text-primary hover:bg-primary hover:text-background-dark transition-all" href="#">
+<span class="material-symbols-outlined text-xl">share</span>
+</a>
+<a class="size-10 rounded-xl glass flex items-center justify-center text-primary hover:bg-primary hover:text-background-dark transition-all" href="#">
+<span class="material-symbols-outlined text-xl">alternate_email</span>
+</a>
+<a class="size-10 rounded-xl glass flex items-center justify-center text-primary hover:bg-primary hover:text-background-dark transition-all" href="#">
+<span class="material-symbols-outlined text-xl">public</span>
+</a>
+</div>
+</div>
+</div>
+<div class="pt-8 border-t border-slate-900 flex flex-col md:row items-center justify-between gap-4">
+<p class="text-slate-500 text-xs">Â© 2024 Bluvia Premium Hydration. All rights reserved.</p>
+<div class="flex gap-6 text-xs text-slate-500">
+<a class="hover:text-slate-300" href="#">Privacy Policy</a>
+<a class="hover:text-slate-300" href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+</footer>
+</body></html>

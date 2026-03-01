@@ -1,0 +1,298 @@
+﻿<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bluvia Premium Orders History</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Outfit:wght@400;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#06e0f9",
+                        "background-light": "#f5f8f8",
+                        "background-dark": "#060d1a",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "outfit": ["Outfit", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .glass {
+            background: rgba(33, 70, 74, 0.2);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glass-nav {
+            background: rgba(6, 13, 26, 0.8);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(6, 224, 249, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+<!-- Navigation -->
+<nav class="glass-nav sticky top-0 z-50 px-6 py-4">
+<div class="max-w-7xl mx-auto flex items-center justify-between">
+<div class="flex items-center gap-10">
+<div class="flex items-center gap-2">
+<div class="text-primary size-8">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 18.4228L42 11.475V34.3663C42 34.7796 41.7457 35.1504 41.3601 35.2992L24 42V18.4228Z" fill="currentColor" fill-rule="evenodd"></path>
+<path clip-rule="evenodd" d="M24 8.18819L33.4123 11.574L24 15.2071L14.5877 11.574L24 8.18819ZM9 15.8487L21 20.4805V37.6263L9 32.9945V15.8487ZM27 37.6263V20.4805L39 15.8487V32.9945L27 37.6263ZM25.354 2.29885C24.4788 1.98402 23.5212 1.98402 22.646 2.29885L4.98454 8.65208C3.7939 9.08038 3 10.2097 3 11.475V34.3663C3 36.0196 4.01719 37.5026 5.55962 38.098L22.9197 44.7987C23.6149 45.0671 24.3851 45.0671 25.0803 44.7987L42.4404 38.098C43.9828 37.5026 45 36.0196 45 34.3663V11.475C45 10.2097 44.2061 9.08038 43.0155 8.65208L25.354 2.29885Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<span class="text-xl font-bold tracking-tight font-outfit text-white">Bluvia</span>
+</div>
+<div class="hidden md:flex items-center gap-6">
+<a class="text-sm font-medium text-slate-400 hover:text-primary transition-colors" href="#">Home</a>
+<a class="text-sm font-medium text-slate-400 hover:text-primary transition-colors" href="#">Products</a>
+<a class="text-sm font-medium text-primary" href="#">My Orders</a>
+<a class="text-sm font-medium text-slate-400 hover:text-primary transition-colors" href="#">Support</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">search</span>
+</button>
+<div class="h-8 w-px bg-slate-800 mx-2"></div>
+<div class="h-10 w-10 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center overflow-hidden">
+<img alt="User Profile" data-alt="User profile avatar photo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRnnmo62W5VZeEJCrKtejfNt3MvvgjkH69M0qWtKyAIrfTaC6CCdqeKLHcNQHToppxwJ6beVQkmZxaj7Tz_rYyQgYlL9jh_eeemktUfilqqkDKq-pxsYD25LdEN89fpZWtVOJtq_IcB466UB8jNk4EjEdnZjY4nkZl0eTRwljlGVhz5yxvV_HB59i8uY8cpwft_mA6w4to3--2pmf9sKkhzIs50HCqpcT6grMTwZJ5aIuuUAoNKOFFVpXqQlFzoBeqSgn7gF53jQU"/>
+</div>
+</div>
+</div>
+</nav>
+<main class="max-w-5xl mx-auto px-6 py-12">
+<!-- Header -->
+<div class="mb-10">
+<nav class="flex items-center gap-2 text-sm text-slate-500 mb-4">
+<a class="hover:text-primary transition-colors" href="#">Home</a>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="text-primary font-medium">My Orders</span>
+</nav>
+<h1 class="text-5xl font-black font-outfit text-white tracking-tight">My Orders</h1>
+<p class="text-slate-400 mt-2 text-lg">Manage and track your premium hydration orders.</p>
+</div>
+<!-- Filter Bar -->
+<div class="glass rounded-xl p-2 mb-8 flex flex-col md:flex-row items-center justify-between gap-4">
+<div class="flex items-center p-1 bg-background-dark/50 rounded-lg w-full md:w-auto">
+<button class="px-6 py-2 rounded-md text-sm font-bold bg-primary text-background-dark transition-all">All</button>
+<button class="px-6 py-2 rounded-md text-sm font-bold text-slate-400 hover:text-white transition-all">Pending</button>
+<button class="px-6 py-2 rounded-md text-sm font-bold text-slate-400 hover:text-white transition-all">Delivered</button>
+<button class="px-6 py-2 rounded-md text-sm font-bold text-slate-400 hover:text-white transition-all">Cancelled</button>
+</div>
+<div class="relative w-full md:w-72">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-500">search</span>
+<input class="w-full bg-background-dark/50 border-slate-800 rounded-lg pl-10 pr-4 py-2 text-sm focus:border-primary focus:ring-1 focus:ring-primary text-white" placeholder="Search by order ID #BLV-..." type="text"/>
+</div>
+</div>
+<!-- Orders List -->
+<div class="space-y-4 mb-16">
+<!-- Card 1: Delivered -->
+<div class="glass rounded-xl overflow-hidden hover:border-primary/30 transition-all duration-300">
+<div class="p-6">
+<div class="flex flex-wrap justify-between items-start gap-4 mb-6">
+<div class="flex flex-col gap-1">
+<span class="text-xs uppercase tracking-widest text-slate-500 font-bold">Order ID</span>
+<span class="text-lg font-bold text-white font-outfit">#BLV-1029</span>
+</div>
+<div class="flex flex-col gap-1 md:items-center">
+<span class="text-xs uppercase tracking-widest text-slate-500 font-bold">Date</span>
+<span class="text-sm font-medium">Oct 12, 2023</span>
+</div>
+<div class="flex flex-col gap-1 md:items-end">
+<span class="text-xs uppercase tracking-widest text-slate-500 font-bold mb-1">Status</span>
+<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+<span class="size-1.5 rounded-full bg-emerald-400 mr-2"></span>
+                                Delivered
+                            </span>
+</div>
+</div>
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-6 py-6 border-y border-slate-800/50">
+<div class="flex items-center gap-4">
+<div class="size-16 rounded-lg bg-primary/10 flex items-center justify-center border border-primary/20">
+<span class="material-symbols-outlined text-primary text-3xl">water_drop</span>
+</div>
+<div>
+<h4 class="font-bold text-white">10x â¹10 Premium Water Bottle</h4>
+<p class="text-sm text-slate-500">Pure Artesian Mineral Water</p>
+</div>
+</div>
+<div class="text-left md:text-right">
+<span class="text-xs text-slate-500 block uppercase tracking-widest font-bold">Total Amount</span>
+<span class="text-2xl font-black text-white font-outfit">â¹100</span>
+</div>
+</div>
+<div class="mt-6 flex flex-wrap justify-end gap-3">
+<button class="px-5 py-2 rounded-lg text-sm font-bold text-slate-300 border border-slate-700 hover:bg-slate-800 transition-all">Track Order</button>
+<button class="px-5 py-2 rounded-lg text-sm font-bold bg-primary text-background-dark hover:shadow-[0_0_15px_rgba(6,224,249,0.4)] transition-all">Reorder</button>
+</div>
+</div>
+</div>
+<!-- Card 2: Pending -->
+<div class="glass rounded-xl overflow-hidden hover:border-primary/30 transition-all duration-300">
+<div class="p-6">
+<div class="flex flex-wrap justify-between items-start gap-4 mb-6">
+<div class="flex flex-col gap-1">
+<span class="text-xs uppercase tracking-widest text-slate-500 font-bold">Order ID</span>
+<span class="text-lg font-bold text-white font-outfit">#BLV-1035</span>
+</div>
+<div class="flex flex-col gap-1 md:items-center">
+<span class="text-xs uppercase tracking-widest text-slate-500 font-bold">Date</span>
+<span class="text-sm font-medium">Oct 20, 2023</span>
+</div>
+<div class="flex flex-col gap-1 md:items-end">
+<span class="text-xs uppercase tracking-widest text-slate-500 font-bold mb-1">Status</span>
+<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20">
+<span class="size-1.5 rounded-full bg-amber-400 mr-2"></span>
+                                Pending
+                            </span>
+</div>
+</div>
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-6 py-6 border-y border-slate-800/50">
+<div class="flex items-center gap-4">
+<div class="size-16 rounded-lg bg-primary/10 flex items-center justify-center border border-primary/20">
+<span class="material-symbols-outlined text-primary text-3xl">water_drop</span>
+</div>
+<div>
+<h4 class="font-bold text-white">50x â¹5 Standard Water Bottle</h4>
+<p class="text-sm text-slate-500">Purified Spring Water</p>
+</div>
+</div>
+<div class="text-left md:text-right">
+<span class="text-xs text-slate-500 block uppercase tracking-widest font-bold">Total Amount</span>
+<span class="text-2xl font-black text-white font-outfit">â¹250</span>
+</div>
+</div>
+<div class="mt-6 flex flex-wrap justify-end gap-3">
+<button class="px-5 py-2 rounded-lg text-sm font-bold bg-gradient-to-r from-primary/80 to-primary text-background-dark hover:shadow-[0_0_15px_rgba(6,224,249,0.4)] transition-all">Track Order</button>
+</div>
+</div>
+</div>
+<!-- Card 3: Cancelled -->
+<div class="glass rounded-xl overflow-hidden hover:border-red-500/30 transition-all duration-300 opacity-80 hover:opacity-100">
+<div class="p-6">
+<div class="flex flex-wrap justify-between items-start gap-4 mb-6">
+<div class="flex flex-col gap-1">
+<span class="text-xs uppercase tracking-widest text-slate-500 font-bold">Order ID</span>
+<span class="text-lg font-bold text-white font-outfit">#BLV-1011</span>
+</div>
+<div class="flex flex-col gap-1 md:items-center">
+<span class="text-xs uppercase tracking-widest text-slate-500 font-bold">Date</span>
+<span class="text-sm font-medium">Sept 15, 2023</span>
+</div>
+<div class="flex flex-col gap-1 md:items-end">
+<span class="text-xs uppercase tracking-widest text-slate-500 font-bold mb-1">Status</span>
+<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-red-500/10 text-red-400 border border-red-500/20">
+<span class="size-1.5 rounded-full bg-red-400 mr-2"></span>
+                                Cancelled
+                            </span>
+</div>
+</div>
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-6 py-6 border-y border-slate-800/50">
+<div class="flex items-center gap-4">
+<div class="size-16 rounded-lg bg-slate-800 flex items-center justify-center border border-slate-700">
+<span class="material-symbols-outlined text-slate-500 text-3xl">water_drop</span>
+</div>
+<div>
+<h4 class="font-bold text-slate-400">5x â¹20 Premium Glass Bottle</h4>
+<p class="text-sm text-slate-500">Sparkling Mineral Water</p>
+</div>
+</div>
+<div class="text-left md:text-right">
+<span class="text-xs text-slate-500 block uppercase tracking-widest font-bold">Total Amount</span>
+<span class="text-2xl font-black text-slate-400 font-outfit">â¹100</span>
+</div>
+</div>
+<div class="mt-6 flex flex-wrap justify-end gap-3">
+<button class="px-5 py-2 rounded-lg text-sm font-bold text-slate-300 border border-slate-700 hover:bg-slate-800 transition-all">View Details</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Empty State (Fallback Example) -->
+<div class="hidden flex-col items-center justify-center py-24 glass rounded-3xl text-center">
+<div class="size-24 bg-primary/10 rounded-full flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-primary text-5xl">shopping_bag</span>
+</div>
+<h3 class="text-2xl font-bold text-white font-outfit">No orders found</h3>
+<p class="text-slate-500 max-w-xs mx-auto mt-2">Looks like you haven't placed any orders yet. Start your premium hydration journey today.</p>
+<button class="mt-8 px-8 py-3 bg-primary text-background-dark rounded-full font-bold hover:shadow-lg transition-all">Shop Now</button>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-[#040811] border-t border-slate-900 pt-16 pb-8">
+<div class="max-w-7xl mx-auto px-6">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+<div class="col-span-1 md:col-span-1">
+<div class="flex items-center gap-2 mb-6">
+<div class="text-primary size-6">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 18.4228L42 11.475V34.3663C42 34.7796 41.7457 35.1504 41.3601 35.2992L24 42V18.4228Z" fill="currentColor" fill-rule="evenodd"></path>
+<path clip-rule="evenodd" d="M24 8.18819L33.4123 11.574L24 15.2071L14.5877 11.574L24 8.18819ZM9 15.8487L21 20.4805V37.6263L9 32.9945V15.8487ZM27 37.6263V20.4805L39 15.8487V32.9945L27 37.6263ZM25.354 2.29885C24.4788 1.98402 23.5212 1.98402 22.646 2.29885L4.98454 8.65208C3.7939 9.08038 3 10.2097 3 11.475V34.3663C3 36.0196 4.01719 37.5026 5.55962 38.098L22.9197 44.7987C23.6149 45.0671 24.3851 45.0671 25.0803 44.7987L42.4404 38.098C43.9828 37.5026 45 36.0196 45 34.3663V11.475C45 10.2097 44.2061 9.08038 43.0155 8.65208L25.354 2.29885Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<span class="text-lg font-bold tracking-tight font-outfit text-white">Bluvia</span>
+</div>
+<p class="text-slate-500 text-sm leading-relaxed">The world's most premium water subscription service, delivered directly to your door.</p>
+</div>
+<div>
+<h5 class="text-white font-bold mb-6">Product</h5>
+<ul class="space-y-4 text-sm text-slate-500">
+<li><a class="hover:text-primary transition-colors" href="#">Premium Line</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Bulk Orders</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Subscriptions</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Sustainability</a></li>
+</ul>
+</div>
+<div>
+<h5 class="text-white font-bold mb-6">Support</h5>
+<ul class="space-y-4 text-sm text-slate-500">
+<li><a class="hover:text-primary transition-colors" href="#">Help Center</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Order Tracking</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Returns &amp; Refunds</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Contact Us</a></li>
+</ul>
+</div>
+<div>
+<h5 class="text-white font-bold mb-6">Connect</h5>
+<div class="flex gap-4">
+<a class="p-2 bg-slate-900 rounded-lg text-primary hover:bg-primary hover:text-background-dark transition-all" href="#">
+<span class="material-symbols-outlined">public</span>
+</a>
+<a class="p-2 bg-slate-900 rounded-lg text-primary hover:bg-primary hover:text-background-dark transition-all" href="#">
+<span class="material-symbols-outlined">alternate_email</span>
+</a>
+<a class="p-2 bg-slate-900 rounded-lg text-primary hover:bg-primary hover:text-background-dark transition-all" href="#">
+<span class="material-symbols-outlined">share</span>
+</a>
+</div>
+</div>
+</div>
+<div class="pt-8 border-t border-slate-900 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-slate-600 text-xs">Â© 2023 Bluvia Premium Hydration. All rights reserved.</p>
+<div class="flex gap-6 text-xs text-slate-600 uppercase tracking-widest font-bold">
+<a class="hover:text-slate-400" href="#">Privacy Policy</a>
+<a class="hover:text-slate-400" href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+</footer>
+</body></html>

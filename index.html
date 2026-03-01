@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BLUVIA — Pure Supply. Smart Distribution.</title>
+  <meta name="description" content="BLUVIA is a premium water bottle supplier offering smart distribution of ₹5, ₹10 and ₹20 water bottles with an advanced management system." />
+
+  <!-- Tailwind CSS (Stitch pages use Tailwind classes) -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#06e0f9",
+            "background-light": "#f5f8f8",
+            "background-dark": "#060d1a",
+          },
+          fontFamily: {
+            "display": ["Inter", "sans-serif"],
+            "heading": ["Outfit", "sans-serif"],
+            "outfit": ["Outfit", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "1rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+
+  <!-- Preconnect fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet" />
+
+  <!-- Material Symbols (used by Stitch-generated pages) -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+
+  <!-- Stitch shared glass styles -->
+  <style>
+    .glass {
+      background: rgba(6, 224, 249, 0.05);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(6, 224, 249, 0.1);
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .glass-dark {
+      background: rgba(6, 224, 249, 0.05);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(6, 224, 249, 0.1);
+    }
+    .glass-nav {
+      background: rgba(6, 13, 26, 0.8);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(6, 224, 249, 0.1);
+    }
+    .hero-gradient {
+      background: linear-gradient(135deg, #06e0f9 0%, #0072ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .text-gradient {
+      background: linear-gradient(to right, #ffffff, #06e0f9);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .cyan-glow { box-shadow: 0 0 15px rgba(0, 229, 255, 0.2); }
+    .cyan-glow:focus { box-shadow: 0 0 15px rgba(6, 224, 249, 0.3); border-color: #06e0f9; }
+    /* Stitch page containers should fill the main properly */
+    #page-content > div[class*="-page"],
+    #page-content > .stitch-page {
+      min-height: 100vh;
+    }
+  </style>
+
+  <!-- Favicon placeholder -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💧</text></svg>" />
+
+  <!-- Three.js (for particle backdrop on home) -->
+  <script src="https://unpkg.com/three@0.158.0/build/three.min.js" crossorigin="anonymous"></script>
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" crossorigin="anonymous"></script>
+</head>
+<body class="bg-background-dark text-slate-100 font-display">
+  <!-- App mount point -->
+  <div id="app">
+    <!-- Navbar injected by components/navbar.js -->
+    <nav id="navbar-mount"></nav>
+
+    <!-- Particle canvas (home page only) -->
+    <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+    <!-- Page content swapped by router -->
+    <main id="page-content"></main>
+
+    <!-- Footer injected by components/footer.js -->
+    <footer id="footer-mount"></footer>
+
+    <!-- Toast container -->
+    <div id="toast-container" aria-live="polite" aria-atomic="false"></div>
+  </div>
+
+  <!-- App entry -->
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

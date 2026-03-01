@@ -1,0 +1,215 @@
+﻿<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bluvia Premium Contact Page</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=Outfit:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#06e0f9",
+                        "background-light": "#f5f8f8",
+                        "background-dark": "#060d1a",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "outfit": ["Outfit", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .glass {
+            background: rgba(15, 33, 35, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(6, 224, 249, 0.1);
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #06e0f9 0%, #0072ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 selection:bg-primary/30">
+<!-- Navbar -->
+<nav class="fixed top-0 w-full z-50 px-6 py-4">
+<div class="max-w-7xl mx-auto glass rounded-xl px-8 py-3 flex items-center justify-between border-primary/20">
+<div class="flex items-center gap-3">
+<div class="size-8 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 18.4228L42 11.475V34.3663C42 34.7796 41.7457 35.1504 41.3601 35.2992L24 42V18.4228Z" fill="currentColor" fill-rule="evenodd"></path>
+<path clip-rule="evenodd" d="M24 8.18819L33.4123 11.574L24 15.2071L14.5877 11.574L24 8.18819ZM9 15.8487L21 20.4805V37.6263L9 32.9945V15.8487ZM27 37.6263V20.4805L39 15.8487V32.9945L27 37.6263ZM25.354 2.29885C24.4788 1.98402 23.5212 1.98402 22.646 2.29885L4.98454 8.65208C3.7939 9.08038 3 10.2097 3 11.475V34.3663C3 36.0196 4.01719 37.5026 5.55962 38.098L22.9197 44.7987C23.6149 45.0671 24.3851 45.0671 25.0803 44.7987L42.4404 38.098C43.9828 37.5026 45 36.0196 45 34.3663V11.475C45 10.2097 44.2061 9.08038 43.0155 8.65208L25.354 2.29885Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<span class="text-xl font-outfit font-bold tracking-tight">Bluvia</span>
+</div>
+<div class="hidden md:flex items-center gap-10">
+<a class="hover:text-primary transition-colors text-sm font-medium" href="#">Products</a>
+<a class="hover:text-primary transition-colors text-sm font-medium" href="#">Technology</a>
+<a class="hover:text-primary transition-colors text-sm font-medium" href="#">Sustainability</a>
+<a class="hover:text-primary transition-colors text-sm font-medium" href="#">About</a>
+</div>
+<button class="bg-primary hover:bg-primary/90 text-background-dark px-6 py-2 rounded-lg font-bold text-sm transition-all transform hover:scale-105">
+                Get Started
+            </button>
+</div>
+</nav>
+<main class="pt-32 pb-20 px-6">
+<div class="max-w-7xl mx-auto">
+<!-- Hero Section -->
+<div class="text-center mb-16">
+<h1 class="text-5xl md:text-7xl font-outfit font-extrabold hero-gradient mb-6">Get in Touch</h1>
+<p class="text-slate-400 max-w-2xl mx-auto text-lg leading-relaxed">
+                    Experience the future of hydration with Bluvia's premium water solutions. Our dedicated team is here to support your journey towards sustainable excellence.
+                </p>
+</div>
+<!-- Quick Contact Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
+<div class="glass p-8 rounded-xl flex flex-col items-center text-center group hover:border-primary/40 transition-all cursor-pointer">
+<div class="size-14 rounded-full bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-all">
+<span class="material-symbols-outlined text-primary text-3xl">sell</span>
+</div>
+<h3 class="text-xl font-bold mb-2">Sales Inquiries</h3>
+<p class="text-slate-400 mb-4 text-sm">For business orders and bulk supply inquiries.</p>
+<a class="text-primary font-semibold hover:underline" href="mailto:sales@bluvia.in">sales@bluvia.in</a>
+</div>
+<div class="glass p-8 rounded-xl flex flex-col items-center text-center group hover:border-primary/40 transition-all cursor-pointer">
+<div class="size-14 rounded-full bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-all">
+<span class="material-symbols-outlined text-primary text-3xl">support_agent</span>
+</div>
+<h3 class="text-xl font-bold mb-2">Technical Support</h3>
+<p class="text-slate-400 mb-4 text-sm">Facing issues? Our tech team is ready to help 24/7.</p>
+<a class="text-primary font-semibold hover:underline" href="mailto:support@bluvia.in">support@bluvia.in</a>
+</div>
+<div class="glass p-8 rounded-xl flex flex-col items-center text-center group hover:border-primary/40 transition-all cursor-pointer">
+<div class="size-14 rounded-full bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-all">
+<span class="material-symbols-outlined text-primary text-3xl">handshake</span>
+</div>
+<h3 class="text-xl font-bold mb-2">Partnership</h3>
+<p class="text-slate-400 mb-4 text-sm">Collaborate with us for sustainable water solutions.</p>
+<a class="text-primary font-semibold hover:underline" href="mailto:partners@bluvia.in">partners@bluvia.in</a>
+</div>
+</div>
+<!-- Two-Column Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Contact Form (2/3 width) -->
+<div class="lg:col-span-2 glass p-10 rounded-2xl border-primary/10">
+<h2 class="text-2xl font-outfit font-bold mb-8 flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">mail</span>
+                        Send us a Message
+                    </h2>
+<form action="#" class="space-y-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="text-sm font-semibold text-slate-300 ml-1">Full Name</label>
+<input class="w-full bg-slate-900/50 border-slate-800 rounded-lg py-3 px-4 focus:ring-primary/50 focus:border-primary text-slate-100 placeholder:text-slate-600 transition-all" placeholder="John Doe" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="text-sm font-semibold text-slate-300 ml-1">Email Address</label>
+<input class="w-full bg-slate-900/50 border-slate-800 rounded-lg py-3 px-4 focus:ring-primary/50 focus:border-primary text-slate-100 placeholder:text-slate-600 transition-all" placeholder="john@company.com" type="email"/>
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-sm font-semibold text-slate-300 ml-1">Company (Optional)</label>
+<input class="w-full bg-slate-900/50 border-slate-800 rounded-lg py-3 px-4 focus:ring-primary/50 focus:border-primary text-slate-100 placeholder:text-slate-600 transition-all" placeholder="Acme Inc." type="text"/>
+</div>
+<div class="space-y-2">
+<label class="text-sm font-semibold text-slate-300 ml-1">Message</label>
+<textarea class="w-full bg-slate-900/50 border-slate-800 rounded-lg py-3 px-4 focus:ring-primary/50 focus:border-primary text-slate-100 placeholder:text-slate-600 transition-all" placeholder="Tell us how we can help you..." rows="5"></textarea>
+</div>
+<button class="w-full bg-primary hover:bg-primary/90 text-background-dark font-bold py-4 rounded-lg shadow-lg shadow-primary/20 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2">
+<span>Send Message</span>
+<span class="material-symbols-outlined">send</span>
+</button>
+</form>
+</div>
+<!-- Contact Sidebar (1/3 width) -->
+<div class="space-y-6">
+<div class="glass p-8 rounded-2xl">
+<h3 class="text-xl font-outfit font-bold mb-6 text-primary">Contact Information</h3>
+<div class="space-y-6">
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary">location_on</span>
+<div>
+<p class="font-semibold text-sm">Headquarters</p>
+<p class="text-slate-400 text-sm leading-relaxed">Level 15, Blue Ocean Tower,<br/>BKC, Mumbai, MH 400051</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary">call</span>
+<div>
+<p class="font-semibold text-sm">Call Us</p>
+<p class="text-slate-400 text-sm">+91 98765 43210</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary">schedule</span>
+<div>
+<p class="font-semibold text-sm">Business Hours</p>
+<p class="text-slate-400 text-sm">Mon - Sat: 9AM - 6PM IST</p>
+<p class="text-slate-500 text-xs mt-1">Closed on Sundays &amp; Public Holidays</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Map/Visual Element Placeholder -->
+<div class="glass h-48 rounded-2xl overflow-hidden relative group">
+<div class="absolute inset-0 bg-primary/10 group-hover:bg-primary/5 transition-colors z-10"></div>
+<img class="w-full h-full object-cover filter grayscale brightness-50 contrast-125" data-alt="Abstract dark blue map background with glowing nodes" data-location="Mumbai, India" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbRD0P6jI00lrYUfzJFJ3rM0v0WZD3Je4tSEntMIhfIFPw2eFpW3yvqrfKAKU0Ud5WTPUztfWNclo18j-LgoHkAdkM62fuBQMMPOVYa3d83-8OQ1QmGbwrM2_gzgqMoGiRFvQERHNv_haUFVinza8kVWxuevKnEppQtGHdbdtXN9AUiDXzF0lIAZVlIcUGyqL6uFWX5NWnwyGXY3AMlrltulv_GR8Zr3MSTmK9u4f6Si2zwYPjMNxDMcBWHbAtlG-UyWOanj1BrXw"/>
+<div class="absolute inset-0 flex items-center justify-center z-20">
+<div class="flex flex-col items-center">
+<div class="size-4 bg-primary rounded-full animate-ping absolute"></div>
+<div class="size-4 bg-primary rounded-full relative"></div>
+<p class="text-[10px] mt-2 font-bold tracking-widest text-primary uppercase">Bluvia Mumbai</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-background-dark border-t border-slate-900/50 pt-20 pb-10 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-center gap-10 mb-16">
+<div class="flex items-center gap-3">
+<div class="size-8 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M24 18.4228L42 11.475V34.3663C42 34.7796 41.7457 35.1504 41.3601 35.2992L24 42V18.4228Z" fill="currentColor"></path>
+</svg>
+</div>
+<span class="text-xl font-outfit font-bold tracking-tight">Bluvia</span>
+</div>
+<div class="flex gap-8 text-slate-400">
+<a class="hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">public</span></a>
+<a class="hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">alternate_email</span></a>
+<a class="hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">share</span></a>
+<a class="hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">rss_feed</span></a>
+</div>
+</div>
+<div class="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-slate-900 text-slate-500 text-sm">
+<p>Â© 2024 Bluvia Water Solutions. All rights reserved.</p>
+<div class="flex gap-6 mt-4 md:mt-0">
+<a class="hover:text-slate-300" href="#">Privacy Policy</a>
+<a class="hover:text-slate-300" href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+</footer>
+</body></html>
