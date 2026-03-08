@@ -128,7 +128,7 @@ Bluvia/
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/Devam510/Bluvia.git
+git clone https://github.com/MihirJayswal812007/Bluvia.git
 cd Bluvia
 ```
 
