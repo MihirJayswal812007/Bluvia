@@ -134,12 +134,34 @@ cd Bluvia
 
 ---
 
-### 2. Set Up the Database
+### 2. Set Up the Database (WAMP)
 
-1. **Start WAMP** and make sure the MySQL service is green (running)
-2. Open **phpMyAdmin** → `http://localhost/phpmyadmin`
-3. Click **SQL** tab and paste the contents of `server/schema.sql`
-4. Click **Go** — this creates the `bluvia` database, all tables, and seed data
+#### A. Install WAMP Server
+
+1. Download **WAMP Server** from [https://www.wampserver.com](https://www.wampserver.com)
+2. Run the installer and follow the on-screen instructions (default installation path: `C:\wamp64`)
+3. Launch WAMP from the Start Menu or desktop shortcut
+
+#### B. Verify Services Are Running
+
+- Look for the **WAMP tray icon** in your system taskbar (bottom-right)
+- The icon should be **green** ✅ — this means Apache and MySQL are both running
+- If it's **orange** or **red**, left-click the icon → hover over **MySQL** → click **Start/Resume Service**
+
+> 💡 If port 3306 is blocked, left-click the WAMP icon → **MySQL** → **MySQL console** to confirm MySQL is active.
+
+#### C. Import the Database Schema
+
+1. Open **phpMyAdmin** in your browser: `http://localhost/phpmyadmin`
+   - Default credentials: Username `root`, Password *(leave blank)*
+2. Click the **SQL** tab in the top navigation bar
+3. Open `server/schema.sql` from the project folder, copy its entire contents, and paste them into the SQL text box
+4. Click **Go** — this will:
+   - Create the `bluvia` database
+   - Create all required tables (`users`, `products`, `inventory`, `orders`, `order_items`)
+   - Insert seed data including the admin account and 3 sample products
+
+> ✅ You should see a success message. You can verify by clicking **bluvia** in the left sidebar and confirming the tables exist.
 
 ---
 
