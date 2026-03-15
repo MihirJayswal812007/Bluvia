@@ -3,7 +3,7 @@
  * Shows data from local database with animated counters, chart, orders table, stock meters.
  */
 
-import { getAllOrders, getInventory, getProducts, getAllUsers } from '../db.js';
+import { getAllOrders, getInventory, getAllUsers } from '../api.js';
 import { formatPrice, formatDate } from '../utils/format.js';
 
 export function render() {
@@ -54,11 +54,17 @@ export async function init() {
   _initDashboardAnimations();
 }
 
-function _loadDashboardData() {
+async function _loadDashboardData() {
   try {
-    const orders = getAllOrders();
-    const inventory = getInventory();
-    const users = getAllUsers();
+    const [ordersRes, inventoryRes, usersRes] = await Promise.all([
+      getAllOrders(),
+      getInventory(),
+      getAllUsers()
+    ]);
+
+    const orders = ordersRes.orders || [];
+    const inventory = inventoryRes.inventory || [];
+    const users = usersRes.users || [];
 
     const totalOrders = orders.length;
     const totalRevenue = orders.reduce((s, o) => s + (o.total_paise || 0), 0);
@@ -100,7 +106,7 @@ function _renderOrdersTable(orders) {
     const statusClass = { delivered: 'delivered', pending: 'pending', shipped: 'transit', cancelled: 'cancelled' }[o.status] || 'pending';
     return `
       <tr>
-        <td>${o.id?.slice(0, 12).toUpperCase() || '—'}</td>
+        <td>${String(o.id).slice(0, 12).toUpperCase() || '—'}</td>
         <td>Order</td>
         <td>${formatPrice(o.total_paise)}</td>
         <td><span class="status-dot ${statusClass}"></span>${o.status || 'pending'}</td>
@@ -110,12 +116,12 @@ function _renderOrdersTable(orders) {
   }).join('');
 }
 
-function _renderStockMeters(inventory) {
+ function _renderStockMeters(inventory) {
   const el = document.getElementById('db-stock');
   if (!el || !inventory.length) return;
   const colors = ['linear-gradient(90deg,var(--c-teal),var(--c-accent))', 'linear-gradient(90deg,var(--c-accent),var(--c-glow))', 'linear-gradient(90deg,#ffc107,#ff9800)'];
   el.innerHTML = inventory.map((inv, i) => {
-    const name = inv.product?.name || 'Product';
+    const name = inv.product_name || 'Product';
     const pct = Math.min(100, Math.round((inv.stock_quantity / Math.max(inv.reorder_threshold * 10, 1)) * 100));
     return `
       <div class="stock-label"><span>${name} Stock</span><span>${pct}%</span></div>

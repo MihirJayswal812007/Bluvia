@@ -1,6 +1,6 @@
 import { getCart, clearCart } from '../utils/cart.js';
 import { formatPrice } from '../utils/format.js';
-import { createOrder } from '../db.js';
+import { placeOrder } from '../api.js';
 import { getUser } from '../auth.js';
 import { showToast } from '../utils/toast.js';
 import { navigate } from '../router.js';
@@ -121,7 +121,7 @@ export function render() {
               <button id="pay-now-btn" class="w-full mt-8 bg-gradient-to-r from-primary to-[#00b4d8] text-background-dark font-display font-black text-lg py-5 rounded-2xl shadow-[0_10px_30px_-10px_rgba(6,224,249,0.5)] hover:scale-[1.02] transition-transform active:scale-95 flex flex-col items-center justify-center gap-1">
                 <span id="pay-btn-text">PLACE ORDER</span>
                 <span class="text-[10px] opacity-70 font-sans font-bold flex items-center gap-1 tracking-wider uppercase">
-                  <span class="material-symbols-outlined text-[12px]">verified_user</span> Demo Mode — No Payment
+                  <span class="material-symbols-outlined text-[12px]">verified_user</span> Cash on Delivery
                 </span>
               </button>
             </div>
@@ -162,16 +162,15 @@ async function _handlePayment() {
       document.getElementById('d-pin')?.value,
     ].filter(Boolean).join(', ');
 
-    // Create order directly in local database
-    const order = createOrder(user.id, items.map(i => ({
-      productId: i.id,
-      quantity: i.quantity,
-      price_paise: i.price_paise,
-    })), totalPaise, addr);
+    // Call the backend API correctly using placeOrder
+    const order = await placeOrder(items.map(i => ({
+      product_id: i.productId,
+      quantity: i.quantity
+    })), addr);
 
     clearCart();
     window.dispatchEvent(new Event('bluvia:cart-updated'));
-    showToast('Order placed successfully! ID: ' + order.id, 'success');
+    showToast('Order placed successfully! ID: ' + order.order_id, 'success');
 
     // Small delay for UX
     setTimeout(() => navigate('/orders'), 500);

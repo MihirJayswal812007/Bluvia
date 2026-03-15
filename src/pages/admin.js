@@ -3,7 +3,7 @@
  * Uses local database instead of Supabase.
  */
 
-import { getAllOrders, getOrderItems, updateOrderStatus, getProducts, getInventory, updateInventory, getAllUsers, getStats } from '../db.js';
+import { getAllOrders, updateOrderStatus, getProducts, updateStock, getAdminStats, getAllUsers, getInventory as fetchInventory } from '../api.js';
 import { formatPrice, formatDate } from '../utils/format.js';
 import { showToast } from '../utils/toast.js';
 
@@ -104,41 +104,49 @@ function _renderSection(section) {
   else if (section === 'users') _renderUsers(content);
 }
 
-function _renderStats(el) {
+async function _renderStats(el) {
   if (!el) return;
-  const stats = getStats();
-  const orders = getAllOrders();
-  const deliveredOrders = orders.filter(o => o.status === 'delivered').length;
+  try {
+    const stats = await getAdminStats();
+    
+    // Fallback values if API returns an error or incomplete data
+    const totalOrders = stats.orders || 0;
+    const totalRevenue = stats.revenue || 0;
+    const pendingOrders = stats.pending_orders || 0;
+    const deliveredOrders = stats.delivered_orders || 0;
 
-  el.innerHTML = ''
-    + '<div class="glass-panel p-6 rounded-xl" style="' + GLOW_STYLE + '">'
-    + '<div class="flex items-center justify-between mb-4">'
-    + '<span class="material-symbols-outlined text-primary bg-primary/10 p-2 rounded-lg">list_alt</span>'
-    + '<span class="text-primary text-xs font-bold flex items-center gap-1"><span class="material-symbols-outlined text-sm">trending_up</span> ' + stats.totalOrders + '</span>'
-    + '</div>'
-    + '<p class="text-slate-400 text-sm font-medium">Total Orders</p>'
-    + '<h3 class="font-heading text-3xl font-bold mt-1 text-white">' + stats.totalOrders.toLocaleString() + '</h3>'
-    + '</div>'
-    + '<div class="glass-panel p-6 rounded-xl" style="' + GLASS_STYLE + '">'
-    + '<div class="flex items-center justify-between mb-4"><span class="material-symbols-outlined text-primary bg-primary/10 p-2 rounded-lg">payments</span></div>'
-    + '<p class="text-slate-400 text-sm font-medium">Revenue</p>'
-    + '<h3 class="font-heading text-3xl font-bold mt-1 text-white">' + formatPrice(stats.totalRevenue) + '</h3>'
-    + '</div>'
-    + '<div class="glass-panel p-6 rounded-xl" style="' + GLASS_STYLE + '">'
-    + '<div class="flex items-center justify-between mb-4"><span class="material-symbols-outlined text-orange-400 bg-orange-400/10 p-2 rounded-lg">pending_actions</span></div>'
-    + '<p class="text-slate-400 text-sm font-medium">Pending Orders</p>'
-    + '<h3 class="font-heading text-3xl font-bold mt-1 text-white">' + stats.pendingOrders + '</h3>'
-    + '</div>'
-    + '<div class="glass-panel p-6 rounded-xl" style="' + GLASS_STYLE + '">'
-    + '<div class="flex items-center justify-between mb-4"><span class="material-symbols-outlined text-green-400 bg-green-400/10 p-2 rounded-lg">check_circle</span></div>'
-    + '<p class="text-slate-400 text-sm font-medium">Delivered</p>'
-    + '<h3 class="font-heading text-3xl font-bold mt-1 text-white">' + deliveredOrders + '</h3>'
-    + '</div>';
+    el.innerHTML = ''
+      + '<div class="glass-panel p-6 rounded-xl" style="' + GLOW_STYLE + '">'
+      + '<div class="flex items-center justify-between mb-4">'
+      + '<span class="material-symbols-outlined text-primary bg-primary/10 p-2 rounded-lg">list_alt</span>'
+      + '<span class="text-primary text-xs font-bold flex items-center gap-1"><span class="material-symbols-outlined text-sm">trending_up</span> ' + totalOrders + '</span>'
+      + '</div>'
+      + '<p class="text-slate-400 text-sm font-medium">Total Orders</p>'
+      + '<h3 class="font-heading text-3xl font-bold mt-1 text-white">' + totalOrders.toLocaleString() + '</h3>'
+      + '</div>'
+      + '<div class="glass-panel p-6 rounded-xl" style="' + GLASS_STYLE + '">'
+      + '<div class="flex items-center justify-between mb-4"><span class="material-symbols-outlined text-primary bg-primary/10 p-2 rounded-lg">payments</span></div>'
+      + '<p class="text-slate-400 text-sm font-medium">Revenue</p>'
+      + '<h3 class="font-heading text-3xl font-bold mt-1 text-white">' + formatPrice(totalRevenue) + '</h3>'
+      + '</div>'
+      + '<div class="glass-panel p-6 rounded-xl" style="' + GLASS_STYLE + '">'
+      + '<div class="flex items-center justify-between mb-4"><span class="material-symbols-outlined text-orange-400 bg-orange-400/10 p-2 rounded-lg">pending_actions</span></div>'
+      + '<p class="text-slate-400 text-sm font-medium">Pending Orders</p>'
+      + '<h3 class="font-heading text-3xl font-bold mt-1 text-white">' + pendingOrders + '</h3>'
+      + '</div>'
+      + '<div class="glass-panel p-6 rounded-xl" style="' + GLASS_STYLE + '">'
+      + '<div class="flex items-center justify-between mb-4"><span class="material-symbols-outlined text-green-400 bg-green-400/10 p-2 rounded-lg">check_circle</span></div>'
+      + '<p class="text-slate-400 text-sm font-medium">Delivered</p>'
+      + '<h3 class="font-heading text-3xl font-bold mt-1 text-white">' + deliveredOrders + '</h3>'
+      + '</div>';
+  } catch (error) {
+    el.innerHTML = '<p class="text-slate-500 py-4 col-span-4">Failed to load stats</p>';
+  }
 }
 
 function _orderRow(o) {
   return '<tr class="hover:bg-white/5 transition-colors">'
-    + '<td class="px-6 py-4 font-mono text-sm text-primary">#' + o.id.substring(0, 12).toUpperCase() + '</td>'
+    + '<td class="px-6 py-4 font-mono text-sm text-primary">#' + (o.id ? o.id.toString().substring(0, 12).toUpperCase() : o.id) + '</td>'
     + '<td class="px-6 py-4 text-sm">' + formatPrice(o.total_paise) + '</td>'
     + '<td class="px-6 py-4"><span class="text-xs font-semibold px-2 py-1 rounded-lg bg-white/5 ' + _statusColor(o.status) + '">' + o.status + '</span></td>'
     + '<td class="px-6 py-4 text-sm text-slate-400">' + formatDate(o.created_at) + '</td>'
@@ -146,28 +154,33 @@ function _orderRow(o) {
     + '</tr>';
 }
 
-function _renderDashboard(el) {
-  const orders = getAllOrders().slice(0, 10);
-  const rows = orders.map(o => _orderRow(o)).join('');
+async function _renderDashboard(el) {
+  try {
+    const ordersItem = await getAllOrders();
+    const orders = (ordersItem.orders || []).slice(0, 10);
+    const rows = orders.map(o => _orderRow(o)).join('');
 
-  el.innerHTML = ''
-    + '<div class="glass-panel rounded-xl overflow-hidden" style="' + GLASS_STYLE + '">'
-    + '<div class="p-6 border-b border-white/5 flex items-center justify-between bg-white/5"><h2 class="font-heading text-xl font-bold text-white">Recent Orders</h2></div>'
-    + '<div class="overflow-x-auto"><table class="w-full text-left"><thead><tr class="bg-white/5 text-slate-400 text-xs font-bold uppercase tracking-wider">'
-    + '<th class="px-6 py-4">Order ID</th><th class="px-6 py-4">Amount</th><th class="px-6 py-4">Status</th><th class="px-6 py-4">Date</th><th class="px-6 py-4 text-right">Action</th>'
-    + '</tr></thead><tbody class="divide-y divide-white/5">'
-    + (rows || '<tr><td colspan="5" class="px-6 py-8 text-center text-slate-500">No orders yet</td></tr>')
-    + '</tbody></table></div></div>';
+    el.innerHTML = ''
+      + '<div class="glass-panel rounded-xl overflow-hidden" style="' + GLASS_STYLE + '">'
+      + '<div class="p-6 border-b border-white/5 flex items-center justify-between bg-white/5"><h2 class="font-heading text-xl font-bold text-white">Recent Orders</h2></div>'
+      + '<div class="overflow-x-auto"><table class="w-full text-left"><thead><tr class="bg-white/5 text-slate-400 text-xs font-bold uppercase tracking-wider">'
+      + '<th class="px-6 py-4">Order ID</th><th class="px-6 py-4">Amount</th><th class="px-6 py-4">Status</th><th class="px-6 py-4">Date</th><th class="px-6 py-4 text-right">Action</th>'
+      + '</tr></thead><tbody class="divide-y divide-white/5">'
+      + (rows || '<tr><td colspan="5" class="px-6 py-8 text-center text-slate-500">No orders yet</td></tr>')
+      + '</tbody></table></div></div>';
 
-  el.addEventListener('click', (e) => {
-    const btn = e.target.closest('[data-action="update-status"]');
-    if (btn) _handleUpdateStatus(btn.dataset.orderId);
-  });
+    el.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-action="update-status"]');
+      if (btn) _handleUpdateStatus(btn.dataset.orderId);
+    });
+  } catch (error) {
+    el.innerHTML = '<p class="text-slate-500 p-8 text-center">Failed to load dashboard</p>';
+  }
 }
 
 function _orderManagementRow(o) {
   return '<tr class="hover:bg-white/5 transition-colors">'
-    + '<td class="px-6 py-4 font-mono text-sm text-primary">#' + o.id.substring(0, 12).toUpperCase() + '</td>'
+    + '<td class="px-6 py-4 font-mono text-sm text-primary">#' + (o.id ? o.id.toString().substring(0, 12).toUpperCase() : o.id) + '</td>'
     + '<td class="px-6 py-4 text-sm">' + formatPrice(o.total_paise) + '</td>'
     + '<td class="px-6 py-4">'
     + '<select class="bg-white/5 border-none text-xs font-semibold rounded-lg px-2 py-1 focus:ring-1 focus:ring-primary ' + _statusColor(o.status) + ' cursor-pointer" data-order-id="' + o.id + '" data-action="status-select">'
@@ -184,125 +197,149 @@ function _orderManagementRow(o) {
     + '</tr>';
 }
 
-function _renderOrders(el) {
-  const orders = getAllOrders();
-  const rows = orders.map(o => _orderManagementRow(o)).join('');
+async function _renderOrders(el) {
+  try {
+    const ordersItem = await getAllOrders();
+    const orders = ordersItem.orders || [];
+    const rows = orders.map(o => _orderManagementRow(o)).join('');
 
-  el.innerHTML = ''
-    + '<div class="glass-panel rounded-xl overflow-hidden" style="' + GLASS_STYLE + '">'
-    + '<div class="p-6 border-b border-white/5 flex items-center justify-between bg-white/5">'
-    + '<h2 class="font-heading text-xl font-bold text-white">Order Management</h2>'
-    + '</div>'
-    + '<div class="overflow-x-auto"><table class="w-full text-left"><thead><tr class="bg-white/5 text-slate-400 text-xs font-bold uppercase tracking-wider">'
-    + '<th class="px-6 py-4">Order ID</th><th class="px-6 py-4">Amount</th><th class="px-6 py-4">Status</th><th class="px-6 py-4">Address</th><th class="px-6 py-4">Date</th><th class="px-6 py-4 text-right">Action</th>'
-    + '</tr></thead><tbody class="divide-y divide-white/5">'
-    + (rows || '<tr><td colspan="6" class="px-6 py-8 text-center text-slate-500">No orders</td></tr>')
-    + '</tbody></table></div></div>';
+    el.innerHTML = ''
+      + '<div class="glass-panel rounded-xl overflow-hidden" style="' + GLASS_STYLE + '">'
+      + '<div class="p-6 border-b border-white/5 flex items-center justify-between bg-white/5">'
+      + '<h2 class="font-heading text-xl font-bold text-white">Order Management</h2>'
+      + '</div>'
+      + '<div class="overflow-x-auto"><table class="w-full text-left"><thead><tr class="bg-white/5 text-slate-400 text-xs font-bold uppercase tracking-wider">'
+      + '<th class="px-6 py-4">Order ID</th><th class="px-6 py-4">Amount</th><th class="px-6 py-4">Status</th><th class="px-6 py-4">Address</th><th class="px-6 py-4">Date</th><th class="px-6 py-4 text-right">Action</th>'
+      + '</tr></thead><tbody class="divide-y divide-white/5">'
+      + (rows || '<tr><td colspan="6" class="px-6 py-8 text-center text-slate-500">No orders</td></tr>')
+      + '</tbody></table></div></div>';
 
-  el.querySelectorAll('[data-action="status-select"]').forEach(select => {
-    select.addEventListener('change', (e) => {
-      const orderId = e.target.dataset.orderId;
-      const newStatus = e.target.value;
-      updateOrderStatus(orderId, newStatus);
-      showToast('Order status updated!', 'success');
-      _renderStats(document.getElementById('admin-stats'));
+    el.querySelectorAll('[data-action="status-select"]').forEach(select => {
+      select.addEventListener('change', async (e) => {
+        const orderId = e.target.dataset.orderId;
+        const newStatus = e.target.value;
+        try {
+          await updateOrderStatus(orderId, newStatus);
+          showToast('Order status updated!', 'success');
+          _renderStats(document.getElementById('admin-stats'));
+        } catch (error) {
+          showToast('Failed to update status', 'error');
+        }
+      });
     });
-  });
 
-  el.addEventListener('click', (e) => {
-    const btn = e.target.closest('[data-action="update-status"]');
-    if (btn) _handleUpdateStatus(btn.dataset.orderId);
-  });
-}
-
-function _renderInventory(el) {
-  const products = getProducts();
-  const inventory = getInventory();
-
-  const inv = {};
-  inventory.forEach(i => { inv[i.product_id] = i; });
-
-  let stockBars = '';
-  products.forEach(p => {
-    const stock = inv[p.id]?.stock_quantity ?? 0;
-    const maxStock = Math.max(stock, 2000);
-    const pct = Math.round((stock / maxStock) * 100);
-    const barColor = pct > 50 ? 'bg-primary' : pct > 20 ? 'bg-orange-400' : 'bg-red-400';
-    stockBars += '<div>'
-      + '<div class="flex justify-between text-sm mb-2"><span class="text-slate-300 font-medium">' + p.name + '</span><span class="text-primary font-bold">' + stock.toLocaleString() + ' units</span></div>'
-      + '<div class="w-full bg-white/5 rounded-full h-2"><div class="' + barColor + ' h-2 rounded-full" style="width:' + pct + '%"></div></div>'
-      + '<div class="mt-2"><button class="text-xs text-primary hover:underline" data-pid="' + p.id + '" data-action="add-stock">+ Add Stock</button></div>'
-      + '</div>';
-  });
-  if (!stockBars) stockBars = '<p class="text-slate-500 text-center py-8">No products</p>';
-
-  let alerts = '';
-  const lowStock = inventory.filter(i => i.stock_quantity < 100);
-  if (lowStock.length > 0) {
-    lowStock.forEach(i => {
-      const prod = products.find(p => p.id === i.product_id);
-      alerts += '<div class="flex items-start gap-3 p-3 rounded-lg bg-orange-400/5 border border-orange-400/20">'
-        + '<span class="material-symbols-outlined text-orange-400">warning</span>'
-        + '<div><p class="text-sm font-semibold text-orange-400">Low Stock: ' + (prod?.name || 'Unknown') + '</p>'
-        + '<p class="text-xs text-slate-400 mt-1">' + i.stock_quantity + ' units remaining.</p></div></div>';
+    el.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-action="update-status"]');
+      if (btn) _handleUpdateStatus(btn.dataset.orderId);
     });
-  } else {
-    alerts = '<div class="flex items-start gap-3 p-3 rounded-lg bg-primary/5 border border-primary/20">'
-      + '<span class="material-symbols-outlined text-primary">check_circle</span>'
-      + '<div><p class="text-sm font-semibold text-primary">All Good</p>'
-      + '<p class="text-xs text-slate-400 mt-1">No low stock alerts at the moment.</p></div></div>';
+  } catch (error) {
+    el.innerHTML = '<p class="text-slate-500 p-8 text-center">Failed to load orders</p>';
   }
-
-  el.innerHTML = ''
-    + '<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">'
-    + '<div class="lg:col-span-2 glass-panel rounded-xl p-6" style="' + GLASS_STYLE + '">'
-    + '<div class="flex items-center justify-between mb-6"><h2 class="font-heading text-lg font-bold text-white">Product Stock Tiers</h2>'
-    + '<button id="refresh-inv" class="text-primary text-sm font-semibold hover:underline">Refresh</button></div>'
-    + '<div class="space-y-6">' + stockBars + '</div></div>'
-    + '<div class="glass-panel rounded-xl p-6 relative overflow-hidden" style="' + GLASS_STYLE + '">'
-    + '<div class="relative z-10"><h2 class="font-heading text-lg font-bold text-white mb-4">Stock Alerts</h2>'
-    + '<div class="space-y-4">' + alerts + '</div></div>'
-    + '<div class="absolute -bottom-10 -right-10 opacity-5"><span class="material-symbols-outlined text-[120px] text-white">inventory</span></div>'
-    + '</div></div>';
-
-  el.addEventListener('click', (e) => {
-    const btn = e.target.closest('[data-action="add-stock"]');
-    if (btn) {
-      const qty = parseInt(prompt('Add how many units?', '500') || '0', 10);
-      if (!qty || qty <= 0) return;
-      const inv = getInventory().find(i => i.product_id === btn.dataset.pid);
-      if (inv) {
-        updateInventory(btn.dataset.pid, inv.stock_quantity + qty);
-        showToast('Added ' + qty + ' units.', 'success');
-        _renderSection('inventory');
-      }
-    }
-    if (e.target.id === 'refresh-inv' || e.target.closest('#refresh-inv')) _renderSection('inventory');
-  });
 }
 
-function _renderUsers(el) {
-  const users = getAllUsers();
+async function _renderInventory(el) {
+  try {
+    const productsItem = await getProducts();
+    const inventoryItem = await fetchInventory();
+    
+    const products = productsItem.products || [];
+    const inventory = inventoryItem.inventory || [];
 
-  let rows = '';
-  users.forEach(u => {
-    const initials = (u.full_name || u.email || '??').substring(0, 2).toUpperCase();
-    const roleCls = u.role === 'admin' ? 'bg-blue-500/10 text-blue-400' : 'bg-green-500/10 text-green-400';
-    rows += '<tr class="hover:bg-white/5 transition-colors">'
-      + '<td class="px-6 py-4"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center text-[10px] font-bold">' + initials + '</div><span class="text-sm font-medium text-white">' + (u.full_name || '—') + '</span></div></td>'
-      + '<td class="px-6 py-4 text-sm text-slate-400">' + u.email + '</td>'
-      + '<td class="px-6 py-4"><span class="text-xs font-semibold px-2 py-1 rounded-lg ' + roleCls + '">' + u.role + '</span></td>'
-      + '<td class="px-6 py-4 text-sm text-slate-400">' + formatDate(u.created_at) + '</td>'
-      + '</tr>';
-  });
-  if (!rows) rows = '<tr><td colspan="4" class="px-6 py-8 text-center text-slate-500">No users</td></tr>';
+    const inv = {};
+    inventory.forEach(i => { inv[i.product_id] = i; });
 
-  el.innerHTML = ''
-    + '<div class="glass-panel rounded-xl overflow-hidden" style="' + GLASS_STYLE + '">'
-    + '<div class="p-6 border-b border-white/5 bg-white/5"><h2 class="font-heading text-xl font-bold text-white">User Management</h2></div>'
-    + '<div class="overflow-x-auto"><table class="w-full text-left"><thead><tr class="bg-white/5 text-slate-400 text-xs font-bold uppercase tracking-wider">'
-    + '<th class="px-6 py-4">Name</th><th class="px-6 py-4">Email</th><th class="px-6 py-4">Role</th><th class="px-6 py-4">Joined</th>'
-    + '</tr></thead><tbody class="divide-y divide-white/5">' + rows + '</tbody></table></div></div>';
+    let stockBars = '';
+    products.forEach(p => {
+      const stock = inv[p.id]?.stock_quantity ?? 0;
+      const maxStock = Math.max(stock, 2000);
+      const pct = Math.round((stock / maxStock) * 100);
+      const barColor = pct > 50 ? 'bg-primary' : pct > 20 ? 'bg-orange-400' : 'bg-red-400';
+      stockBars += '<div>'
+        + '<div class="flex justify-between text-sm mb-2"><span class="text-slate-300 font-medium">' + p.name + '</span><span class="text-primary font-bold">' + stock.toLocaleString() + ' units</span></div>'
+        + '<div class="w-full bg-white/5 rounded-full h-2"><div class="' + barColor + ' h-2 rounded-full" style="width:' + pct + '%"></div></div>'
+        + '<div class="mt-2"><button class="text-xs text-primary hover:underline" data-pid="' + p.id + '" data-action="add-stock">+ Add Stock</button></div>'
+        + '</div>';
+    });
+    if (!stockBars) stockBars = '<p class="text-slate-500 text-center py-8">No products</p>';
+
+    let alerts = '';
+    const lowStock = inventory.filter(i => i.stock_quantity < 100);
+    if (lowStock.length > 0) {
+      lowStock.forEach(i => {
+        const prod = products.find(p => p.id === i.product_id);
+        alerts += '<div class="flex items-start gap-3 p-3 rounded-lg bg-orange-400/5 border border-orange-400/20">'
+          + '<span class="material-symbols-outlined text-orange-400">warning</span>'
+          + '<div><p class="text-sm font-semibold text-orange-400">Low Stock: ' + (prod?.name || 'Unknown') + '</p>'
+          + '<p class="text-xs text-slate-400 mt-1">' + i.stock_quantity + ' units remaining.</p></div></div>';
+      });
+    } else {
+      alerts = '<div class="flex items-start gap-3 p-3 rounded-lg bg-primary/5 border border-primary/20">'
+        + '<span class="material-symbols-outlined text-primary">check_circle</span>'
+        + '<div><p class="text-sm font-semibold text-primary">All Good</p>'
+        + '<p class="text-xs text-slate-400 mt-1">No low stock alerts at the moment.</p></div></div>';
+    }
+
+    el.innerHTML = ''
+      + '<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">'
+      + '<div class="lg:col-span-2 glass-panel rounded-xl p-6" style="' + GLASS_STYLE + '">'
+      + '<div class="flex items-center justify-between mb-6"><h2 class="font-heading text-lg font-bold text-white">Product Stock Tiers</h2>'
+      + '<button id="refresh-inv" class="text-primary text-sm font-semibold hover:underline">Refresh</button></div>'
+      + '<div class="space-y-6">' + stockBars + '</div></div>'
+      + '<div class="glass-panel rounded-xl p-6 relative overflow-hidden" style="' + GLASS_STYLE + '">'
+      + '<div class="relative z-10"><h2 class="font-heading text-lg font-bold text-white mb-4">Stock Alerts</h2>'
+      + '<div class="space-y-4">' + alerts + '</div></div>'
+      + '<div class="absolute -bottom-10 -right-10 opacity-5"><span class="material-symbols-outlined text-[120px] text-white">inventory</span></div>'
+      + '</div></div>';
+
+    el.addEventListener('click', async (e) => {
+      const btn = e.target.closest('[data-action="add-stock"]');
+      if (btn) {
+        const qty = parseInt(prompt('Add how many units?', '500') || '0', 10);
+        if (!qty || qty <= 0) return;
+        const invEntry = inventory.find(i => i.product_id == btn.dataset.pid);
+        const currentStock = invEntry ? invEntry.stock_quantity : 0;
+        try {
+          await updateStock(btn.dataset.pid, currentStock + qty);
+          showToast('Added ' + qty + ' units.', 'success');
+          _renderSection('inventory');
+        } catch (error) {
+          showToast('Failed to add stock', 'error');
+        }
+      }
+      if (e.target.id === 'refresh-inv' || e.target.closest('#refresh-inv')) _renderSection('inventory');
+    });
+  } catch (error) {
+    el.innerHTML = '<p class="text-slate-500 p-8 text-center">Failed to load inventory</p>';
+  }
+}
+
+async function _renderUsers(el) {
+  try {
+    const res = await getAllUsers();
+    const users = res.users || [];
+
+    let rows = '';
+    users.forEach(u => {
+      const initials = (u.full_name || u.username || u.email || '??').substring(0, 2).toUpperCase();
+      const roleCls = u.role === 'admin' ? 'bg-blue-500/10 text-blue-400' : 'bg-green-500/10 text-green-400';
+      rows += '<tr class="hover:bg-white/5 transition-colors">'
+        + '<td class="px-6 py-4"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center text-[10px] font-bold">' + initials + '</div><span class="text-sm font-medium text-white">' + (u.full_name || u.username || '—') + '</span></div></td>'
+        + '<td class="px-6 py-4 text-sm text-slate-400">' + u.email + '</td>'
+        + '<td class="px-6 py-4"><span class="text-xs font-semibold px-2 py-1 rounded-lg ' + roleCls + '">' + u.role + '</span></td>'
+        + '<td class="px-6 py-4 text-sm text-slate-400">' + formatDate(u.created_at) + '</td>'
+        + '</tr>';
+    });
+    if (!rows) rows = '<tr><td colspan="4" class="px-6 py-8 text-center text-slate-500">No users</td></tr>';
+
+    el.innerHTML = ''
+      + '<div class="glass-panel rounded-xl overflow-hidden" style="' + GLASS_STYLE + '">'
+      + '<div class="p-6 border-b border-white/5 bg-white/5"><h2 class="font-heading text-xl font-bold text-white">User Management</h2></div>'
+      + '<div class="overflow-x-auto"><table class="w-full text-left"><thead><tr class="bg-white/5 text-slate-400 text-xs font-bold uppercase tracking-wider">'
+      + '<th class="px-6 py-4">Name</th><th class="px-6 py-4">Email</th><th class="px-6 py-4">Role</th><th class="px-6 py-4">Joined</th>'
+      + '</tr></thead><tbody class="divide-y divide-white/5">' + rows + '</tbody></table></div></div>';
+  } catch (error) {
+    el.innerHTML = '<p class="text-slate-500 p-8 text-center">Failed to load users</p>';
+  }
 }
 
 function _statusColor(status) {
@@ -310,12 +347,17 @@ function _statusColor(status) {
   return map[status] || 'text-slate-400';
 }
 
-function _handleUpdateStatus(orderId) {
+async function _handleUpdateStatus(orderId) {
   const newStatus = prompt('Enter new status: pending | confirmed | processing | shipped | delivered | cancelled');
   if (!newStatus) return;
   const valid = ['pending', 'confirmed', 'processing', 'shipped', 'delivered', 'cancelled'];
   if (!valid.includes(newStatus)) { showToast('Invalid status.', 'error'); return; }
-  updateOrderStatus(orderId, newStatus);
-  showToast('Order status updated!', 'success');
-  _renderSection(_activeTab);
+  
+  try {
+    await updateOrderStatus(orderId, newStatus);
+    showToast('Order status updated!', 'success');
+    _renderSection(_activeTab);
+  } catch (error) {
+    showToast('Failed to update order status.', 'error');
+  }
 }

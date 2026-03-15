@@ -32,7 +32,14 @@ export function render() {
   `;
 }
 
-export function init() {
+export async function init() {
+    import('../auth.js').then(async ({ isAuthenticated, getUser }) => {
+        if (await isAuthenticated()) {
+            const user = await getUser();
+            navigate(user?.role === 'admin' ? '/dashboard' : '/orders');
+        }
+    });
+    
     const form = document.getElementById('login-form');
     form?.addEventListener('submit', async e => {
         e.preventDefault();
@@ -49,9 +56,9 @@ export function init() {
         btn.disabled = true;
         btn.textContent = 'Signing in…';
         try {
-            await signIn(email, password);
+            const data = await signIn(email, password);
             showToast('Welcome back!', 'success');
-            navigate('/dashboard');
+            navigate(data.user.role === 'admin' ? '/dashboard' : '/orders');
         } catch (err) {
             showToast(err.message || 'Login failed', 'error');
             btn.disabled = false;

@@ -45,7 +45,14 @@ export function render() {
   `;
 }
 
-export function init() {
+export async function init() {
+    import('../auth.js').then(async ({ isAuthenticated, getUser }) => {
+        if (await isAuthenticated()) {
+            const user = await getUser();
+            navigate(user?.role === 'admin' ? '/dashboard' : '/orders');
+        }
+    });
+
     const form = document.getElementById('signup-form');
     form?.addEventListener('submit', async e => {
         e.preventDefault();
@@ -64,9 +71,9 @@ export function init() {
 
         btn.disabled = true; btn.textContent = 'Creating account…';
         try {
-            await signUp(email, pass, name);
-            showToast('Account created! Check your email to confirm.', 'success');
-            navigate('/login');
+            const data = await signUp(email, pass, name);
+            showToast('Account created successfully!', 'success');
+            navigate(data.user?.role === 'admin' ? '/dashboard' : '/orders');
         } catch (err) {
             showToast(err.message || 'Signup failed', 'error');
             btn.disabled = false; btn.textContent = 'Create Account';

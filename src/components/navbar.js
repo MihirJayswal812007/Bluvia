@@ -12,7 +12,7 @@ import { getUser, signOut, isAdmin } from '../auth.js';
 import { getCartCount } from '../utils/cart.js';
 import { showToast } from '../utils/toast.js';
 
-let _unlistenAuth = null;
+let _navEventsBound = false;
 
 export async function renderNavbar() {
     const mount = document.getElementById('navbar-mount');
@@ -138,14 +138,18 @@ function _bindNavEvents() {
         }
     });
 
-    // Navbar scroll shrink
-    const nav = document.querySelector('.navbar');
-    const onScroll = () => nav?.classList.toggle('scrolled', window.scrollY > 60);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
+    if (!_navEventsBound) {
+        _navEventsBound = true;
+        const onScroll = () => {
+            const nav = document.querySelector('.navbar');
+            nav?.classList.toggle('scrolled', window.scrollY > 60);
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
 
-    // Cart badge update listener
-    window.addEventListener('bluvia:cart-updated', () => renderNavbar());
+        // Cart badge update listener
+        window.addEventListener('bluvia:cart-updated', () => renderNavbar());
+    }
 }
 
 /**

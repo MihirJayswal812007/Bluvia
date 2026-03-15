@@ -3,7 +3,7 @@
  * Fetches orders from local database.
  */
 
-import { getOrdersByUser, getOrderItems } from '../db.js';
+import { getMyOrders } from '../api.js';
 import { getUser } from '../auth.js';
 import { formatPrice, formatDate } from '../utils/format.js';
 import { navigate } from '../router.js';
@@ -70,17 +70,18 @@ async function _loadOrders() {
       return;
     }
 
-    _orders = getOrdersByUser(user.id);
+    const res = await getMyOrders();
+    _orders = res.orders || [];
 
     // Enrich with order items
     _orders = _orders.map(o => {
-      const items = getOrderItems(o.id);
+      const items = o.items || [];
       return {
         ...o,
         order_items: items.map(oi => ({
           quantity: oi.quantity,
           unit_price: oi.unit_price_paise,
-          products: oi.product || { name: 'Item' },
+          products: { name: oi.product_name || 'Item' },
         })),
         total_amount: o.total_paise,
       };
@@ -123,7 +124,7 @@ function _renderList() {
 
 function _orderCard(order) {
   const cfg = STATUS_CONFIG[order.status] || STATUS_CONFIG.pending;
-  const shortId = '#BLV-' + order.id.substring(0, 8).toUpperCase();
+  const shortId = '#BLV-' + String(order.id).substring(0, 8).toUpperCase();
   const itemsStr = (order.order_items || [])
     .map(i => i.quantity + 'x ' + (i.products?.name || 'Item'))
     .join(', ') || 'N/A';

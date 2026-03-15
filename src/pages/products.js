@@ -29,6 +29,28 @@ export async function init() {
   await _loadProducts();
   if (!isMobile()) _initTilt();
   _initScrollReveal();
+
+  const handleProductClick = e => {
+    const btn = e.target.closest('.product-add-btn');
+    if (!btn || btn.disabled) return;
+    const card = btn.closest('.product-card');
+    const productIdStr = card?.dataset.id;
+    if (!productIdStr) return;
+
+    const productId = parseInt(productIdStr, 10);
+    const name = card.querySelector('.product-name')?.textContent;
+    const priceText = card.querySelector('.price-badge')?.textContent?.replace('₹', '');
+    const price_paise = Math.round(parseFloat(priceText || '0') * 100);
+
+    addToCart({ id: productId, name, price_paise }, 1);
+    showToast(`${name} added to cart`, 'success');
+  };
+
+  document.addEventListener('click', handleProductClick);
+
+  return () => {
+    document.removeEventListener('click', handleProductClick);
+  };
 }
 
 async function _loadProducts() {
@@ -123,22 +145,6 @@ function _initScrollReveal() {
 }
 
 function _initTilt() {
-  document.addEventListener('click', e => {
-    const btn = e.target.closest('.product-add-btn');
-    if (!btn || btn.disabled) return;
-    const card = btn.closest('.product-card');
-    const productId = card?.dataset.id;
-    if (!productId) return;
-
-    // Read from DOM since we don't store products in memory
-    const name = card.querySelector('.product-name')?.textContent;
-    const priceText = card.querySelector('.price-badge')?.textContent?.replace('₹', '');
-    const price_paise = Math.round(parseFloat(priceText || '0') * 100);
-
-    addToCart({ id: productId, name, price_paise }, 1);
-    showToast(`${name} added to cart`, 'success');
-  });
-
   document.querySelectorAll('.product-card').forEach(el => {
     let targetRX = 0, targetRY = 0, currRX = 0, currRY = 0, rafPending = false;
     const lerp = (a, b, t) => a + (b - a) * t;

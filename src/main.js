@@ -31,7 +31,7 @@ registerRoute('/about', renderAbout, null, 'public');
 registerRoute('/contact', renderContact, initContact, 'public');
 registerRoute('/login', renderLogin, initLogin, 'public');
 registerRoute('/signup', renderSignup, initSignup, 'public');
-registerRoute('/dashboard', renderDashboard, initDashboard, 'protected');
+registerRoute('/dashboard', renderDashboard, initDashboard, 'admin');
 registerRoute('/orders', renderOrders, initOrders, 'protected');
 registerRoute('/checkout', renderCheckout, initCheckout, 'protected');
 registerRoute('/admin', renderAdmin, initAdmin, 'admin');
