@@ -5,7 +5,7 @@
 ![Bluvia Banner](https://img.shields.io/badge/Bluvia-Premium%20Water%20Supply-00e5ff?style=for-the-badge&logo=water&logoColor=white)
 
 [![Vite](https://img.shields.io/badge/Vite-5.x-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev)
-[![Node.js](https://img.shields.io/badge/Node.js-Express-339933?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org)
+[![PHP](https://img.shields.io/badge/PHP-8.3-777BB4?style=flat-square&logo=php&logoColor=white)](https://php.net)
 [![MySQL](https://img.shields.io/badge/MySQL-8.x-4479A1?style=flat-square&logo=mysql&logoColor=white)](https://mysql.com)
 [![JavaScript](https://img.shields.io/badge/JavaScript-ES2022-F7DF1E?style=flat-square&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 [![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
@@ -35,7 +35,7 @@ Dark glassmorphism UI · MySQL backend · JWT Auth · Real-time order management
 - **📦 Order Management** — Place orders with GST calculation, inventory deduction via MySQL transactions
 - **⚙️ Admin Panel** — Manage orders, inventory, and users with live stats
 - **📱 Fully Responsive** — Works on mobile, tablet, and desktop
-- **🗄️ MySQL Backend** — Express REST API connected to MySQL (WAMP-compatible)
+- **🗄️ MySQL Backend** — PHP REST API connected to MySQL via PDO (WAMP-compatible)
 
 ---
 
@@ -53,12 +53,10 @@ Dark glassmorphism UI · MySQL backend · JWT Auth · Real-time order management
 ### Backend
 | Technology | Purpose |
 |------------|---------|
-| **Node.js + Express** | REST API server (port 3001) |
+| **PHP 8.2+** | REST API server (port 8000) |
 | **MySQL 8 / WAMP** | Database |
-| **mysql2** | MySQL driver with connection pooling |
-| **jsonwebtoken** | JWT session tokens |
-| **bcryptjs** | Password hashing |
-| **cors** | Cross-origin requests |
+| **PDO** | MySQL database driver |
+| **firebase/php-jwt** | JWT session tokens |
 
 ---
 
@@ -95,18 +93,13 @@ Bluvia/
 │       ├── format.js
 │       └── razorpay.js
 │
-├── 📂 server/                  # Backend (Express + MySQL)
-│   ├── index.js                # Express app entry point
-│   ├── db.js                   # MySQL connection pool
+├── 📂 server_php/              # Backend (PHP + MySQL)
+│   ├── index.php               # Main API router and entry point
+│   ├── db.php                  # PDO MySQL connection
+│   ├── jwt.php                 # JWT helper functions
 │   ├── schema.sql              # Database schema + seed data
-│   ├── .env                    # Environment variables (not committed)
-│   ├── 📂 middleware/
-│   │   └── auth.js             # JWT requireAuth / requireAdmin
-│   └── 📂 routes/
-│       ├── auth.js             # POST /api/auth/signup, /login, /me
-│       ├── products.js         # GET/POST/PATCH /api/products
-│       ├── orders.js           # POST/GET /api/orders
-│       └── admin.js            # GET /api/admin/stats, users, inventory
+│   ├── composer.json           # PHP dependencies (firebase/php-jwt)
+│   └── 📂 vendor/              # Composer packages
 │
 ├── index.html                  # SPA shell
 ├── vite.config.js              # Vite config
@@ -155,7 +148,7 @@ cd Bluvia
 1. Open **phpMyAdmin** in your browser: `http://localhost/phpmyadmin`
    - Default credentials: Username `root`, Password *(leave blank)*
 2. Click the **SQL** tab in the top navigation bar
-3. Open `server/schema.sql` from the project folder, copy its entire contents, and paste them into the SQL text box
+3. Open `server_php/schema.sql` from the project folder, copy its entire contents, and paste them into the SQL text box
 4. Click **Go** — this will:
    - Create the `bluvia` database
    - Create all required tables (`users`, `products`, `inventory`, `orders`, `order_items`)
@@ -165,42 +158,25 @@ cd Bluvia
 
 ---
 
-### 3. Configure the Backend
+### 3. Configure and Start the Backend
+
+Make sure PHP is available in your command line or WAMP environment. Then, install the JWT dependency using Composer:
 
 ```bash
-cd server
+cd server_php
+composer install
+cd ..
 ```
 
-Create/edit `server/.env`:
+*Note: The database connection is configured in `server_php/db.php` for `localhost`, `root` user, and no password by default (standard WAMP setup). Update it if your MySQL settings differ.*
 
-```env
-# MySQL / WAMP Settings
-DB_HOST=localhost
-DB_PORT=3306
-DB_USER=root
-DB_PASSWORD=          # Leave empty for default WAMP setup
-DB_NAME=bluvia
-
-# Server
-PORT=3001
-
-# JWT Secret — change this in production!
-JWT_SECRET=your_long_random_secret_here
-JWT_EXPIRES_IN=7d
-```
-
-Install dependencies and start:
+Start the PHP development server:
 
 ```bash
-npm install
-npm run dev
+npm run server:php
 ```
 
-You should see:
-```
-✅ MySQL connected successfully
-🚀 Bluvia API server running at http://localhost:3001
-```
+The API will now be running at `http://localhost:8000/api`.
 
 ---
 
@@ -286,10 +262,9 @@ npm run build    # Build for production → dist/
 npm run preview  # Preview production build
 ```
 
-### Backend (`server/` directory)
+### Backend
 ```bash
-npm run dev      # Start with hot reload (node --watch)
-npm start        # Start without hot reload (production)
+npm run server:php  # Starts PHP built-in server on port 8000
 ```
 
 ---

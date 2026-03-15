@@ -1,12 +1,11 @@
 /**
  * BLUVIA — Frontend API Client
- * All data calls go to Express backend (http://localhost:3001/api)
- * Falls back to localStorage mock if backend is unreachable.
+ * All data calls go to PHP backend (http://localhost:8000/api)
  */
 
 import { getAuthHeader } from './auth.js';
 
-const BASE = 'http://localhost:3001/api';
+const BASE = 'http://localhost:8000/api';
 
 async function _call(path, options = {}) {
     const res = await fetch(`${BASE}${path}`, {

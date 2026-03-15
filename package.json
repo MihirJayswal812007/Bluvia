@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "server:php": "C:\\wamp64\\bin\\php\\php8.3.28\\php.exe -S localhost:8000 -t server_php server_php/index.php"
   },
   "devDependencies": {
     "vite": "^5.1.4"

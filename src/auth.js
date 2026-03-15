@@ -1,10 +1,10 @@
 /**
  * BLUVIA — Frontend Auth
- * Calls the Express API (/api/auth) instead of localStorage.
+ * Calls the PHP API (/api/auth) for authentication.
  * JWT token stored in localStorage for session persistence.
  */
 
-const API = 'http://localhost:3001/api';
+const API = 'http://localhost:8000/api';
 const TOKEN_KEY = 'bluvia_token';
 const USER_KEY = 'bluvia_user';
 

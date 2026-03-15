@@ -1,0 +1,15 @@
+{
+    "name": "bluvia/server",
+    "description": "PHP backend for Bluvia",
+    "type": "project",
+    "require": {
+        "firebase/php-jwt": "*",
+        "vlucas/phpdotenv": "*"
+    },
+    "authors": [
+        {
+            "name": "Author",
+            "email": "author@example.com"
+        }
+    ]
+}
