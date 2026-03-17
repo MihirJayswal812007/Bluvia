@@ -626,6 +626,16 @@ section {
   outline: none;
 }
 
+.form-input:-webkit-autofill,
+.form-input:-webkit-autofill:hover, 
+.form-input:-webkit-autofill:focus, 
+.form-input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px var(--c-deep) inset !important;
+  -webkit-text-fill-color: var(--c-white) !important;
+  caret-color: var(--c-white) !important;
+  border-color: rgba(0, 229, 255, .2) !important;
+}
+
 .form-input:focus {
   border-color: var(--c-accent);
   box-shadow: 0 0 0 3px rgba(0, 229, 255, .15);
