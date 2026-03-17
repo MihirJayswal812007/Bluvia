@@ -1,10 +1,17 @@
 CREATE DATABASE IF NOT EXISTS bluvia;
 USE bluvia;
 
+DROP TABLE IF EXISTS order_items;
+DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS inventory;
+DROP TABLE IF EXISTS products;
+DROP TABLE IF EXISTS categories;
+DROP TABLE IF EXISTS users;
+
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     full_name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL UNIQUE,
+    email VARCHAR(191) NOT NULL UNIQUE,
     password_hash VARCHAR(255) NOT NULL,
     role VARCHAR(50) DEFAULT 'user',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -12,8 +19,8 @@ CREATE TABLE IF NOT EXISTS users (
 
 CREATE TABLE IF NOT EXISTS categories (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL UNIQUE,
-    slug VARCHAR(255) NOT NULL UNIQUE,
+    name VARCHAR(191) NOT NULL UNIQUE,
+    slug VARCHAR(191) NOT NULL UNIQUE,
     image_url VARCHAR(255)
 );
 
@@ -21,7 +28,7 @@ CREATE TABLE IF NOT EXISTS products (
     id INT AUTO_INCREMENT PRIMARY KEY,
     category_id INT,
     name VARCHAR(255) NOT NULL,
-    slug VARCHAR(255) NOT NULL UNIQUE,
+    slug VARCHAR(191) NOT NULL UNIQUE,
     description TEXT,
     price_paise INT NOT NULL, /* using paise (Rs/100) */
     image_url VARCHAR(255),
@@ -59,8 +66,8 @@ CREATE TABLE IF NOT EXISTS order_items (
 
 -- Insert dummy admin (password is 'admin123')
 INSERT IGNORE INTO users (full_name, email, password_hash, role) VALUES 
-('Admin User', 'admin@bluvia.com', '$2y$10$tZk5.RMyB5VvN4zIUK/iU.TFYb2m4uL3nQf4W8l6/iV2hRKVqT0nK', 'admin'),
-('John Doe', 'john@example.com', '$2y$10$tZk5.RMyB5VvN4zIUK/iU.TFYb2m4uL3nQf4W8l6/iV2hRKVqT0nK', 'user');
+('Admin User', 'admin@bluvia.com', '$2y$10$B1QtUxMEgKDkbwIVUKeyxeT4aDupbg8J3jIxQ8GH4EyWdQDxlMzsW', 'admin'),
+('John Doe', 'john@example.com', '$2y$10$B1QtUxMEgKDkbwIVUKeyxeT4aDupbg8J3jIxQ8GH4EyWdQDxlMzsW', 'user');
 
 INSERT IGNORE INTO categories (id, name, slug) VALUES 
 (1, 'Water Bottles', 'water-bottles'),
