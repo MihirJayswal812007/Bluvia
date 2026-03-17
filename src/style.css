@@ -613,35 +613,37 @@ section {
   letter-spacing: .04em;
 }
 
-.form-input {
+.auth-card .form-input {
   width: 100%;
+  appearance: none;
   padding: .85rem 1rem;
-  background: rgba(255, 255, 255, .05);
+  background-color: rgba(255, 255, 255, .05);
   border: 1px solid rgba(0, 229, 255, .2);
   border-radius: 12px;
   color: var(--c-white);
   font-family: var(--font-b);
   font-size: .95rem;
-  transition: border-color .3s, box-shadow .3s;
+  line-height: 1.5;
+  transition: border-color .3s, box-shadow .3s, background-color .3s;
   outline: none;
 }
 
-.form-input:-webkit-autofill,
-.form-input:-webkit-autofill:hover, 
-.form-input:-webkit-autofill:focus, 
-.form-input:-webkit-autofill:active {
+.auth-card .form-input:-webkit-autofill,
+.auth-card .form-input:-webkit-autofill:hover, 
+.auth-card .form-input:-webkit-autofill:focus, 
+.auth-card .form-input:-webkit-autofill:active {
   -webkit-box-shadow: 0 0 0 1000px var(--c-deep) inset !important;
   -webkit-text-fill-color: var(--c-white) !important;
   caret-color: var(--c-white) !important;
   border-color: rgba(0, 229, 255, .2) !important;
 }
 
-.form-input:focus {
+.auth-card .form-input:focus {
   border-color: var(--c-accent);
   box-shadow: 0 0 0 3px rgba(0, 229, 255, .15);
 }
 
-.form-input::placeholder {
+.auth-card .form-input::placeholder {
   color: var(--c-muted);
 }
 
